@@ -67,7 +67,6 @@ public class Observer : MonoBehaviour
 			// Tests the target's disgusting table.
 			int index = PotentialTargets.IndexOf(target);
 			float disgustingValue = _tableSegments[index].GetDisgustingValue();
-			Debug.Log(disgustingValue);
 			if (disgustingValue >= _distgustThreshold)
 			{
 				target.Punish();
