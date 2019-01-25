@@ -11,7 +11,6 @@ public class TableSegment : MonoBehaviour
 		IDisgusting disgusting = other.GetComponent<IDisgusting>();
 		if (disgusting != null && !_disgustingObjects.Contains(disgusting))
 		{
-			Debug.LogFormat("Added: {0}", other.name);
 			_disgustingObjects.Add(disgusting);
 		}
 	}
@@ -21,7 +20,6 @@ public class TableSegment : MonoBehaviour
 		IDisgusting disgusting = other.GetComponent<IDisgusting>();
 		if (disgusting != null && _disgustingObjects.Contains(disgusting))
 		{
-			Debug.LogFormat("Removed: {0}", other.name);
 			_disgustingObjects.Remove(disgusting);
 		}
 	}

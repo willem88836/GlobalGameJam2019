@@ -285,7 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _waitInterval: {x: 0, y: 0}
   _distgustThreshold: 0
-  _rotationSpeed: 5
+  _rotationSpeed: 3
   _head: {fileID: 1958632312}
   _tableSegments:
   - {fileID: 1828146796}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Observer : MonoBehaviour
 {
-	private const float MINANGLEDELTA = 0.005f;
+	private const float MINANGLEDELTA = 2.7f;
 
 
 	[SerializeField] private Vector2 _waitInterval;
@@ -16,7 +16,7 @@ public class Observer : MonoBehaviour
 	// TODO: reference to a list of players;
 	public List<Target> PotentialTargets = new List<Target>();
 
-	private Quaternion _originRotation;
+	private Vector3 _originRotation;
 	private List<float> _targetLastLookedAtTimeStamps = new List<float>();
 
 
@@ -35,7 +35,7 @@ public class Observer : MonoBehaviour
 
 
 
-		_originRotation = transform.rotation;
+		_originRotation = transform.forward;
 		StartCoroutine(LookBehaviour());
 	}
 
@@ -47,6 +47,7 @@ public class Observer : MonoBehaviour
 			// waits for the action to start. 
 			float pauseDuration = Random.Range(_waitInterval.x, _waitInterval.y);
 			yield return new WaitForSeconds(pauseDuration);
+
 			Target target = FindRandomTarget();
 
 			// something with an animation (put on glasses or something).
@@ -54,14 +55,15 @@ public class Observer : MonoBehaviour
 			yield return new WaitForSeconds(animationDuration);
 
 			// rotates towards target.
-			Quaternion rotationTarget = Quaternion.Euler(target.Position - _head.position);
-			float rotDistance = Quaternion.Angle(_head.rotation, rotationTarget);
-			while(rotDistance > MINANGLEDELTA)
+			float a = 0;
+			while (a < _rotationSpeed)
 			{
-				Rotate(_head.rotation, rotationTarget, ref rotDistance);
+				Rotate(_originRotation, target.Position, a);
+				a += Time.deltaTime;
 				yield return new WaitForEndOfFrame();
 			}
 
+			
 			// Tests the target's disgusting table.
 			int index = PotentialTargets.IndexOf(target);
 			float disgustingValue = _tableSegments[index].GetDisgustingValue();
@@ -72,21 +74,20 @@ public class Observer : MonoBehaviour
 			}
 
 			// Rotates back
-			rotDistance = Quaternion.Angle(_head.rotation, _originRotation);
-			while (rotDistance > MINANGLEDELTA)
+			while (a > 0)
 			{
-				Rotate(_head.rotation, _originRotation, ref rotDistance);
+				Rotate(_originRotation, target.Position, a);
+				a -= Time.deltaTime;
 				yield return new WaitForEndOfFrame();
 			}
 		}
 	}
 
 
-	private void Rotate(Quaternion o, Quaternion t, ref float d)
+	private void Rotate(Vector3 o, Vector3 t, float a)
 	{
-		Quaternion updatedRotation = Quaternion.RotateTowards(o, t, _rotationSpeed * Time.deltaTime);
-		_head.rotation = updatedRotation;
-		d = Quaternion.Angle(_head.rotation, t);
+		Vector3 updatedDir = Vector3.Lerp(o, t, a);
+		_head.LookAt(updatedDir);
 	}
 
 
