@@ -8,9 +8,13 @@ public class Observer : MonoBehaviour
 
 
 	[SerializeField] private Vector2 _waitInterval;
+	[SerializeField] private float _distgustThreshold;
 	[SerializeField] private float _rotationSpeed;
 	[SerializeField] private Transform _head;
+	[SerializeField] private TableSegment[] _tableSegments;
 
+	// TODO: reference to a list of players;
+	public List<Target> PotentialTargets = new List<Target>();
 
 	private Quaternion _originRotation;
 	private List<float> _targetLastLookedAtTimeStamps = new List<float>();
@@ -20,11 +24,23 @@ public class Observer : MonoBehaviour
 
 	private void Start()
 	{
+		foreach(TableSegment segment in _tableSegments)
+		{
+			PotentialTargets.Add(new Target() { Position = segment.transform.position });
+			_targetLastLookedAtTimeStamps.Add(Time.timeSinceLevelLoad);
+		}
+
+
+
+
+
+
 		_originRotation = transform.rotation;
+		StartCoroutine(LookBehaviour());
 	}
 
 	// is ran on server.
-	private IEnumerator WaitToLook()
+	private IEnumerator LookBehaviour()
 	{
 		while (true)
 		{
@@ -47,11 +63,13 @@ public class Observer : MonoBehaviour
 			}
 
 			// Tests the target's disgusting table.
-			if (target.MyTable.IsDisgusting())
+			int index = PotentialTargets.IndexOf(target);
+			float disgustingValue = _tableSegments[index].GetDisgustingValue();
+			Debug.Log(disgustingValue);
+			if (disgustingValue >= _distgustThreshold)
 			{
 				target.Punish();
 			}
-
 
 			// Rotates back
 			rotDistance = Quaternion.Angle(_head.rotation, _originRotation);
@@ -66,7 +84,7 @@ public class Observer : MonoBehaviour
 
 	private void Rotate(Quaternion o, Quaternion t, ref float d)
 	{
-		Quaternion updatedRotation = Quaternion.RotateTowards(o, t, _rotationSpeed);
+		Quaternion updatedRotation = Quaternion.RotateTowards(o, t, _rotationSpeed * Time.deltaTime);
 		_head.rotation = updatedRotation;
 		d = Quaternion.Angle(_head.rotation, t);
 	}
@@ -75,15 +93,10 @@ public class Observer : MonoBehaviour
 	// is ran on server.
 	private Target FindRandomTarget()
 	{
-		// TODO: reference to a list of players;
-		List<Target> potentialTargets = new List<Target>();
-
-
-
 		float oldestTimeStamp = float.MaxValue;
 		int oldestTimeStampIndex = -1;
 
-		for (int i = 0; i < potentialTargets.Count; i++)
+		for (int i = 0; i < PotentialTargets.Count; i++)
 		{
 			float current = _targetLastLookedAtTimeStamps[i];
 			if (current < oldestTimeStamp)
@@ -96,7 +109,7 @@ public class Observer : MonoBehaviour
 		if (oldestTimeStampIndex != -1)
 		{
 			_targetLastLookedAtTimeStamps[oldestTimeStampIndex] = Time.timeSinceLevelLoad;
-			return potentialTargets[oldestTimeStampIndex];
+			return PotentialTargets[oldestTimeStampIndex];
 		}
 
 		return null;
@@ -108,17 +121,7 @@ public class Observer : MonoBehaviour
 // TODO: Replace this class with a script that actually represents a player. 
 public class Target
 {
-	public class Table
-	{
-		public bool IsDisgusting()
-		{
-			return true;
-		}
-	}
-
-	public Table MyTable = new Table();
 	public Vector3 Position = Vector3.zero;
-
 
 	public void Punish()
 	{
