@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class GrabObject : MonoBehaviour
 {
-
+	Rigidbody _rigidbody;	
 
 	// will eventually also contain information about how far the hand closes, dirt value, et cetera
 	int _defaultLayer = 0; 
@@ -12,40 +11,20 @@ public class GrabObject : MonoBehaviour
 
 	bool _released = false;
 
-
+	void Start()
+	{
+		_rigidbody = GetComponent<Rigidbody>();	
+	}
 
 	public void Grab()
 	{
 		gameObject.layer = 9;
-		_released = false;
+		_rigidbody.useGravity = false;
 	}
 
-	public void PrepareRelease()
+	public void Release()
 	{
-		//gameObject.layer = 0;
-		StartCoroutine(Release());
-	}
-
-	IEnumerator Release()
-	{
-		yield return new WaitUntil(()=> HasCollision() == false);
-		Debug.Log("layered");
-		//gameObject.layer = 0;
-	}
-
-	bool HasCollision()
-	{
-		Collider[] colliders = Physics.OverlapSphere(transform.position, 1);
-		
-		for (int i = 0; i < colliders.Length; i++)
-		{
-			if (colliders[i].tag == "Hand")
-			{
-				Debug.Log("true");
-				return true;
-			}
-		}
-		Debug.Log("false");
-		return false;
+		gameObject.layer = 0;
+		_rigidbody.useGravity = true;
 	}
 }

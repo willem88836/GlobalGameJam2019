@@ -57,11 +57,10 @@ public class HandGrabber : MonoBehaviour
 	void ReleaseGrab()
 	{
 		_isGrabbing = false;
-
-		if (_grabbedObject = null)
+		if (_grabbedObject == null)
 			return;
 
-		_grabbedObject.PrepareRelease();
+		_grabbedObject.Release();
 		_grabbedObject = null;
 	}
 
