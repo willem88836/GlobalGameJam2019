@@ -136,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78ee3a61aaeefa84188f264bf03edf69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _waitInterval: {x: 0, y: 0}
-  _distgustThreshold: 0
+  _waitInterval: {x: 3, y: 8}
+  _distgustThreshold: 20
   _rotationSpeed: 3
   _head: {fileID: 2778005388516363249}
   _tableSegments:

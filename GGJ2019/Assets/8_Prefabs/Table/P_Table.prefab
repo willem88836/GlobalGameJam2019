@@ -124,7 +124,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6866240678260772958}
   m_Layer: 0
-  m_Name: Table
+  m_Name: P_Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,7 +454,7 @@ PrefabInstance:
     - target: {fileID: 2762033707388081535, guid: 65379ff7013097d4a85401fc11c40bac,
         type: 3}
       propertyPath: m_Name
-      value: TableSegment
+      value: P_TableSegment
       objectReference: {fileID: 0}
     - target: {fileID: 2762033707388081534, guid: 65379ff7013097d4a85401fc11c40bac,
         type: 3}

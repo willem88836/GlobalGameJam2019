@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class Observer : MonoBehaviour
 {
-	private const float MINANGLEDELTA = 2.7f;
-
-
 	[SerializeField] private Vector2 _waitInterval;
 	[SerializeField] private float _distgustThreshold;
 	[SerializeField] private float _rotationSpeed;
