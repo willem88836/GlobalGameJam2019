@@ -4,12 +4,10 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [NetworkSettings(channel = 2, sendInterval = 1.0f / 15.0f)]
-public class PlayerMovementSync : NetworkBehaviour
+public class PlayerHandSync : NetworkBehaviour
 {
 	[SerializeField] Transform _transform;
 	[SerializeField] Rigidbody _rigid;
-	[SerializeField] string _identifier;
-	[SerializeField] int _channelId;
 
 	Coroutine _syncMovement = null;
 	Coroutine _syncRotate = null;
@@ -17,14 +15,10 @@ public class PlayerMovementSync : NetworkBehaviour
 	Coroutine _smoothMovement = null;
 	Coroutine _smoothRotate = null;
 
-	float _backRotation = 0.0f;
-
 	float _lastMoveUpdate = 0f;
 	float _lastRotateUpdate = 0f;
 
 	Vector3 _lastVelocity = Vector3.zero;
-
-	bool _walking = true;
 
 	float _sendInterval = 0.1f;
 
@@ -46,11 +40,14 @@ public class PlayerMovementSync : NetworkBehaviour
 	}
 
 	void Start()
-    {
+	{
 		_sendInterval = GetNetworkSendInterval();
 
 		if (isServer)
+		{
 			SetLocalMovement();
+			SetLocalRotate();
+		}
 	}
 
 	[Server]
@@ -76,7 +73,6 @@ public class PlayerMovementSync : NetworkBehaviour
 
 		_lastMoveUpdate = Time.time;
 
-		Debug.Log("Setting rigid to false for: " + _identifier + " - " + _rigid.gameObject.name);
 		_rigid.isKinematic = false;
 		_syncMovement = StartCoroutine(SyncClientMovement());
 	}
@@ -180,15 +176,6 @@ public class PlayerMovementSync : NetworkBehaviour
 	{
 		for (; ; )
 		{
-
-			Vector3 horVelocity = _rigid.velocity;
-			horVelocity.y = 0;
-
-			if (horVelocity.sqrMagnitude > 1.0f)
-				_walking = true;
-			else
-				_walking = false;
-
 			CmdMovementUpdate(_rigid.position, _rigid.velocity);
 
 			yield return new WaitForSeconds(_sendInterval);
@@ -200,14 +187,6 @@ public class PlayerMovementSync : NetworkBehaviour
 	{
 		for (; ; )
 		{
-			Vector3 horVelocity = _rigid.velocity;
-			horVelocity.y = 0;
-
-			if (horVelocity.sqrMagnitude > 1.0f)
-				_walking = true;
-			else
-				_walking = false;
-
 			RpcMovementUpdate(_rigid.position, _rigid.velocity);
 
 			yield return new WaitForSeconds(_sendInterval);
@@ -221,7 +200,7 @@ public class PlayerMovementSync : NetworkBehaviour
 	{
 		for (; ; )
 		{
-			CmdRotateUpdate(_rigid.rotation, _rigid.angularVelocity, _backRotation);
+			CmdRotateUpdate(_rigid.rotation, _rigid.angularVelocity);
 
 			yield return new WaitForSeconds(_sendInterval);
 		}
@@ -232,7 +211,7 @@ public class PlayerMovementSync : NetworkBehaviour
 	{
 		for (; ; )
 		{
-			RpcRotateUpdate(_rigid.rotation, _rigid.angularVelocity, _backRotation);
+			RpcRotateUpdate(_rigid.rotation, _rigid.angularVelocity);
 
 			yield return new WaitForSeconds(_sendInterval);
 		}
@@ -255,11 +234,6 @@ public class PlayerMovementSync : NetworkBehaviour
 		if (_smoothMovement != null)
 			StopCoroutine(_smoothMovement);
 		_smoothMovement = StartCoroutine(SmoothMove(predictedPosition, avgDelta));
-
-		if (velocity.sqrMagnitude > 1.0f)
-			_walking = true;
-		else
-			_walking = false;
 	}
 
 	[ClientRpc]
@@ -279,11 +253,6 @@ public class PlayerMovementSync : NetworkBehaviour
 		if (_smoothMovement != null)
 			StopCoroutine(_smoothMovement);
 		_smoothMovement = StartCoroutine(SmoothMove(predictedPosition, avgDelta));
-
-		if (velocity.sqrMagnitude > 1.0f)
-			_walking = true;
-		else
-			_walking = false;
 	}
 
 	[ClientRpc]
@@ -297,17 +266,12 @@ public class PlayerMovementSync : NetworkBehaviour
 		if (_smoothMovement != null)
 			StopCoroutine(_smoothMovement);
 		_smoothMovement = StartCoroutine(SmoothMove(predictedPosition, avgDelta));
-
-		if (velocity.sqrMagnitude > 1.0f)
-			_walking = true;
-		else
-			_walking = false;
 	}
 
 	// ROTATE SYNC
 
 	[Command]
-	void CmdRotateUpdate(Quaternion rotation, Vector3 angularVelocity, float backRotation)
+	void CmdRotateUpdate(Quaternion rotation, Vector3 angularVelocity)
 	{
 		AddRotateDelta();
 		float avgDelta = GetRotateDelta();
@@ -319,15 +283,15 @@ public class PlayerMovementSync : NetworkBehaviour
 
 		Quaternion predictedRotation = rotation; // * Quaternion.Euler(localVelocity * GetPlayerLatency());
 
-		RpcRemoteRotateUpdate(predictedRotation, angularVelocity, backRotation);
+		RpcRemoteRotateUpdate(predictedRotation, angularVelocity);
 
 		if (_smoothRotate != null)
 			StopCoroutine(_smoothRotate);
-		_smoothRotate = StartCoroutine(SmoothRotate(predictedRotation, backRotation, avgDelta));
+		_smoothRotate = StartCoroutine(SmoothRotate(predictedRotation, avgDelta));
 	}
 
 	[ClientRpc]
-	void RpcRemoteRotateUpdate(Quaternion rotation, Vector3 angularVelocity, float backRotation)
+	void RpcRemoteRotateUpdate(Quaternion rotation, Vector3 angularVelocity)
 	{
 		// Only sync from server on non local players
 		if (isLocalPlayer)
@@ -345,11 +309,11 @@ public class PlayerMovementSync : NetworkBehaviour
 
 		if (_smoothRotate != null)
 			StopCoroutine(_smoothRotate);
-		_smoothRotate = StartCoroutine(SmoothRotate(predictedRotation, backRotation, avgDelta));
+		_smoothRotate = StartCoroutine(SmoothRotate(predictedRotation, avgDelta));
 	}
 
 	[ClientRpc]
-	void RpcRotateUpdate(Quaternion rotation, Vector3 angularVelocity, float backRotation)
+	void RpcRotateUpdate(Quaternion rotation, Vector3 angularVelocity)
 	{
 		AddRotateDelta();
 		float avgDelta = GetRotateDelta();
@@ -363,7 +327,7 @@ public class PlayerMovementSync : NetworkBehaviour
 
 		if (_smoothRotate != null)
 			StopCoroutine(_smoothRotate);
-		_smoothRotate = StartCoroutine(SmoothRotate(predictedRotation, backRotation, avgDelta));
+		_smoothRotate = StartCoroutine(SmoothRotate(predictedRotation, avgDelta));
 	}
 
 	// SMOOTH SYNC
@@ -392,10 +356,9 @@ public class PlayerMovementSync : NetworkBehaviour
 		_smoothMovement = null;
 	}
 
-	IEnumerator SmoothRotate(Quaternion rotation, float backAngle, float duration)
+	IEnumerator SmoothRotate(Quaternion rotation, float duration)
 	{
 		Quaternion oldRotation = _rigid.rotation;
-		float oldBackAngle = _backRotation;
 
 		float timer = 0.0f;
 
@@ -406,10 +369,6 @@ public class PlayerMovementSync : NetworkBehaviour
 			timer += Time.deltaTime;
 			float percent = timer / duration;
 			Quaternion currentRot = Quaternion.Lerp(oldRotation, rotation, percent);
-			float currentAngle = Mathf.Lerp(oldBackAngle, backAngle, percent);
-
-			// Update rotation for next sync
-			_backRotation = currentAngle;
 
 			// Works for kinimatic
 			_transform.rotation = currentRot;
@@ -420,17 +379,6 @@ public class PlayerMovementSync : NetworkBehaviour
 	}
 
 	// ACCESS
-
-	public bool IsWalking()
-	{
-		return _walking;
-	}
-
-	[Client]
-	public void SetBackRotation(float angle)
-	{
-		_backRotation = angle;
-	}
 
 	void AddMovementDelta()
 	{
