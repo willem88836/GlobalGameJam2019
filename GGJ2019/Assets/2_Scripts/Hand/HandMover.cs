@@ -35,7 +35,6 @@ public class HandMover : MonoBehaviour
 		else if (Input.GetKey(KeyCode.Joystick1Button4))
 			_rigidbody.AddForce(Vector3.down * speed);
 
-
 			// TODO set a max velocity here if needed
-		}
+	}
 }

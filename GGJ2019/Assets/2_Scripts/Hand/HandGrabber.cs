@@ -1,12 +1,12 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class HandGrabber : MonoBehaviour
 {
 	bool _isGrabbing;
-	Transform _grabbedObject;
+	GrabObject _grabbedObject;
 
-	Collider[] _grabables;
+	List<GrabObject> _grabables = new List<GrabObject>();
 
     void Update()
     {
@@ -29,22 +29,27 @@ public class HandGrabber : MonoBehaviour
 	{
 		_isGrabbing = true;
 
-		_grabbedObject = _grabables[0].transform;
-
-		Debug.Log(_grabbedObject);
-
-		if (_grabables.Length > 1)
+		if (_grabables.Count == 0)
 			return;
 
-		// get the one thats the closest 
-		for (int i = 0; i < _grabables.Length; i++)
+		_grabbedObject = _grabables[0];
+
+		if (_grabables.Count > 1)
+			GetClosestObject();
+
+		_grabbedObject.Grab();
+	}
+
+	void GetClosestObject()
+	{
+		for (int i = 0; i < _grabables.Count; i++)
 		{
-			float closestDistance = Vector3.Distance(transform.position, _grabbedObject.position);
+			float closestDistance = Vector3.Distance(transform.position, _grabbedObject.transform.position);
 			float thisDistance = Vector3.Distance(transform.position, _grabables[i].transform.position);
 
 			if (thisDistance < closestDistance)
 			{
-				_grabbedObject = _grabables[i].transform;
+				_grabbedObject = _grabables[i];
 			}
 		}
 	}
@@ -52,16 +57,28 @@ public class HandGrabber : MonoBehaviour
 	void ReleaseGrab()
 	{
 		_isGrabbing = false;
+
+		if (_grabbedObject = null)
+			return;
+
+		_grabbedObject.PrepareRelease();
 		_grabbedObject = null;
 	}
 
 	void HoldObject()
 	{
-		_grabbedObject.position = transform.position;
+		_grabbedObject.transform.position = transform.position;
 	}
 
 	void OnTriggerEnter(Collider other)
 	{
-		
+		if (other.GetComponent<GrabObject>())
+			_grabables.Add(other.GetComponent<GrabObject>());;
+	}
+
+	private void OnTriggerExit(Collider other)
+	{
+		if (other.GetComponent<GrabObject>())
+			_grabables.Remove(other.GetComponent<GrabObject>());
 	}
 }
