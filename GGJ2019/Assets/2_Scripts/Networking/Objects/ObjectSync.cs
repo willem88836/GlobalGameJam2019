@@ -44,7 +44,7 @@ public class ObjectSync : NetworkBehaviour
 		if (isServer)
 		{
 			SetServerMovement();
-			PlayerList.Singleton().OnPlayerJoined += delegate { ForceSync(_transform); };
+			SetServerRotate();
 		}
 	}
 
@@ -68,6 +68,8 @@ public class ObjectSync : NetworkBehaviour
 		_transform.GetComponent<Collider>().enabled = true;
 
 		_syncMovement = StartCoroutine(SyncServerMovement());
+
+		PlayerList.Singleton().OnPlayerJoined += delegate { ForceSync(_transform); };
 	}
 
 	[ClientRpc]
@@ -103,6 +105,14 @@ public class ObjectSync : NetworkBehaviour
 			return;
 
 		DisableRotateSync();
+	}
+
+	public void DisableSync()
+	{
+		DisableMovementSync();
+		DisableRotateSync();
+
+		PlayerList.Singleton().OnPlayerJoined -= delegate { ForceSync(_transform); };
 	}
 
 	void DisableMovementSync()
