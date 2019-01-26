@@ -39,7 +39,6 @@ public class Grapes : MonoBehaviour, IObjective, IEdible, IDisgusting
 			if (vel >= _maxVelocity)
 			{
 				// TODO: Do something with force release on the server.
-				GetComponent<GrabObject>().GrabParent.ForceRelease();
 			}
 		}
 		_previousPosition = currentPosition;

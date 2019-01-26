@@ -8,8 +8,8 @@ public class GrabObject : MonoBehaviour
 
 	int _throwForceMultiplier = 2;
 
-	int _defaultLayer = 0; 
-	int _grabbedLayer = 9;
+	public static int DEFAULTLAYER = 0; 
+	public static int GRABBEDLAYER = 9;
 
 	void Start()
 	{
@@ -18,13 +18,13 @@ public class GrabObject : MonoBehaviour
 
 	public virtual void Grab()
 	{
-		gameObject.layer = _grabbedLayer;
+		gameObject.layer = GRABBEDLAYER;
 		_rigidbody.useGravity = false;
 	}
 
 	public virtual void Release(Vector3 velocity)
 	{
-		gameObject.layer = _defaultLayer;
+		gameObject.layer = DEFAULTLAYER;
 		_rigidbody.useGravity = true;
 		_rigidbody.velocity = velocity * _throwForceMultiplier;
 	}

@@ -57,7 +57,7 @@ public class HandGrabber : MonoBehaviour
 		if (_grabables.Count > 1)
 			GetClosestObject();
 
-		_grabbedObject.Grab(this);
+		_grabbedObject.Grab();
 
 		StartAnimateOpen(0.17f);
 	}
