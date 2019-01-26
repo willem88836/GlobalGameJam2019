@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class TableSegment : MonoBehaviour
 {
+	public SpawnSphere SpawnLocation;
+
 	private List<IDisgusting> _disgustingObjects = new List<IDisgusting>();
 
 
@@ -23,7 +25,6 @@ public class TableSegment : MonoBehaviour
 			_disgustingObjects.Remove(disgusting);
 		}
 	}
-
 
 	public float GetDisgustingValue()
 	{

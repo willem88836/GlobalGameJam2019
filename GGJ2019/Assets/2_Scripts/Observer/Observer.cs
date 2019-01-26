@@ -8,10 +8,7 @@ public class Observer : MonoBehaviour
 	[SerializeField] private float _distgustThreshold;
 	[SerializeField] private float _rotationSpeed;
 	[SerializeField] private Transform _head;
-	[SerializeField] private TableSegment[] _tableSegments;
-
-	// TODO: reference to a list of players;
-	public List<Target> PotentialTargets = new List<Target>();
+	[SerializeField] private TableSegmentCollection _segmentCollection;
 
 	private Vector3 _originRotation;
 	private List<float> _targetLastLookedAtTimeStamps = new List<float>();
@@ -21,16 +18,10 @@ public class Observer : MonoBehaviour
 
 	private void Start()
 	{
-		foreach(TableSegment segment in _tableSegments)
+		foreach(TableSegment segment in _segmentCollection.Segments)
 		{
-			PotentialTargets.Add(new Target() { Position = segment.transform.position });
-			_targetLastLookedAtTimeStamps.Add(Time.timeSinceLevelLoad);
+			_targetLastLookedAtTimeStamps.Add(0);
 		}
-
-
-
-
-
 
 		_originRotation = transform.forward;
 		StartCoroutine(LookBehaviour());
@@ -45,7 +36,8 @@ public class Observer : MonoBehaviour
 			float pauseDuration = Random.Range(_waitInterval.x, _waitInterval.y);
 			yield return new WaitForSeconds(pauseDuration);
 
-			Target target = FindRandomTarget();
+			int targetIndex = FindRandomTarget();
+			TableSegment targetSegment = _segmentCollection[targetIndex];
 
 			// something with an animation (put on glasses or something).
 			float animationDuration = 5; // TODO: change this to animation duration.
@@ -55,24 +47,24 @@ public class Observer : MonoBehaviour
 			float a = 0;
 			while (a < _rotationSpeed)
 			{
-				Rotate(_originRotation, target.Position, a);
+				Rotate(_originRotation, targetSegment.transform.position, a);
 				a += Time.deltaTime;
 				yield return new WaitForEndOfFrame();
 			}
 
 			
 			// Tests the target's disgusting table.
-			int index = PotentialTargets.IndexOf(target);
-			float disgustingValue = _tableSegments[index].GetDisgustingValue();
+			float disgustingValue = _segmentCollection[targetIndex].GetDisgustingValue();
 			if (disgustingValue >= _distgustThreshold)
 			{
-				target.Punish();
+				//TODO: some consequence or whatever.
+				Debug.LogWarning("Nothing happens yet when the place is disgusting"); 
 			}
 
 			// Rotates back
 			while (a > 0)
 			{
-				Rotate(_originRotation, target.Position, a);
+				Rotate(_originRotation, targetSegment.transform.position, a);
 				a -= Time.deltaTime;
 				yield return new WaitForEndOfFrame();
 			}
@@ -88,12 +80,12 @@ public class Observer : MonoBehaviour
 
 
 	// is ran on server.
-	private Target FindRandomTarget()
+	private int FindRandomTarget()
 	{
 		float oldestTimeStamp = float.MaxValue;
 		int oldestTimeStampIndex = -1;
 
-		for (int i = 0; i < PotentialTargets.Count; i++)
+		for (int i = 0; i < _segmentCollection.Count; i++)
 		{
 			float current = _targetLastLookedAtTimeStamps[i];
 			if (current < oldestTimeStamp)
@@ -106,22 +98,8 @@ public class Observer : MonoBehaviour
 		if (oldestTimeStampIndex != -1)
 		{
 			_targetLastLookedAtTimeStamps[oldestTimeStampIndex] = Time.timeSinceLevelLoad;
-			return PotentialTargets[oldestTimeStampIndex];
 		}
 
-		return null;
-	}
-
-}
-
-
-// TODO: Replace this class with a script that actually represents a player. 
-public class Target
-{
-	public Vector3 Position = Vector3.zero;
-
-	public void Punish()
-	{
-
+		return oldestTimeStampIndex;
 	}
 }
