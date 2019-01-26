@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 [NetworkSettings(channel = 2, sendInterval = 1.0f / 15.0f)]
-public class PlayerHandSync : NetworkBehaviour
+public class ObjectSync : NetworkBehaviour
 {
 	[SerializeField] Transform _transform;
 	[SerializeField] Rigidbody _rigid;
@@ -26,15 +26,12 @@ public class PlayerHandSync : NetworkBehaviour
 	[SerializeField] int _trackCount = 10;
 	[SerializeField] float _maxDeltaInterval = 0.5f;
 
-	NetworkPlayer _networkPlayer;
 	PlayerList _playerList;
 
 	void Awake()
 	{
 		// Default set kinematic
 		_rigid.isKinematic = true;
-
-		_networkPlayer = GetComponent<NetworkPlayer>();
 	}
 
 	void Start()
@@ -222,6 +219,8 @@ public class PlayerHandSync : NetworkBehaviour
 	{
 		AddMovementDelta();
 		float avgDelta = GetMovementDelta();
+
+		_lastVelocity = velocity;
 
 		Vector3 predictedPosition = position + (velocity * GetPlayerLatency());
 
@@ -449,8 +448,8 @@ public class PlayerHandSync : NetworkBehaviour
 
 		RpcForceSync(point.position, point.rotation);
 
-		SetLocalMovement();
-		SetLocalRotate();
+		SetServerMovement();
+		SetServerRotate();
 	}
 
 	[ClientRpc(channel = 0)]
@@ -465,11 +464,6 @@ public class PlayerHandSync : NetworkBehaviour
 
 		_transform.position = position;
 		_transform.rotation = rotation;
-	}
-
-	float GetPlayerLatency()
-	{
-		return _networkPlayer.GetLatency();
 	}
 
 	float GetLocalLatency()
