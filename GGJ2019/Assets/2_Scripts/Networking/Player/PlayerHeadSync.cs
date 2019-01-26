@@ -20,17 +20,23 @@ public class PlayerHeadSync : NetworkBehaviour
 	List<float> _rotateDelta = new List<float>();
 
 	[SerializeField] int _trackCount = 10;
-
 	[SerializeField] float _maxDeltaInterval = 0.5f;
+
+	NetworkPlayer _networkPlayer;
+	PlayerList _playerList;
 
 	void Awake()
 	{
 		// Default set kinematic
 		_rigid.isKinematic = true;
+
+		_networkPlayer = GetComponent<NetworkPlayer>();
 	}
 
 	void Start()
 	{
+		_playerList = PlayerList.Singleton();
+
 		_sendInterval = GetNetworkSendInterval();
 
 		if (isServer)
@@ -132,7 +138,7 @@ public class PlayerHeadSync : NetworkBehaviour
 		float eulerLength = eulerVelocity.magnitude;
 		Vector3 localVelocity = new Vector3(0.0f, eulerLength, 0.0f);
 
-		Quaternion predictedRotation = rotation; // * Quaternion.Euler(localVelocity * GetPlayerLatency());
+		Quaternion predictedRotation = rotation * Quaternion.Euler(localVelocity * GetPlayerLatency());
 
 		RpcRemoteRotateUpdate(predictedRotation, angularVelocity);
 
@@ -156,7 +162,7 @@ public class PlayerHeadSync : NetworkBehaviour
 		float eulerLength = eulerVelocity.magnitude;
 		Vector3 localVelocity = new Vector3(0.0f, eulerLength, 0.0f);
 
-		Quaternion predictedRotation = rotation; // * Quaternion.Euler(localVelocity * GetLocalLatency());
+		Quaternion predictedRotation = rotation * Quaternion.Euler(localVelocity * GetLocalLatency());
 
 		if (_smoothRotate != null)
 			StopCoroutine(_smoothRotate);
@@ -174,7 +180,7 @@ public class PlayerHeadSync : NetworkBehaviour
 		float eulerLength = eulerVelocity.magnitude;
 		Vector3 localVelocity = new Vector3(0.0f, eulerLength, 0.0f);
 
-		Quaternion predictedRotation = rotation; // * Quaternion.Euler(localVelocity * GetLocalLatency());
+		Quaternion predictedRotation = rotation * Quaternion.Euler(localVelocity * GetLocalLatency());
 
 		if (_smoothRotate != null)
 			StopCoroutine(_smoothRotate);
@@ -263,7 +269,6 @@ public class PlayerHeadSync : NetworkBehaviour
 		return average;
 	}
 
-	/*
 	float GetPlayerLatency()
 	{
 		return _networkPlayer.GetLatency();
@@ -276,5 +281,4 @@ public class PlayerHeadSync : NetworkBehaviour
 
 		return 0;
 	}
-	*/
 }

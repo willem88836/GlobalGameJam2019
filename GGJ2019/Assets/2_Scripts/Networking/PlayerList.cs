@@ -61,6 +61,14 @@ public class PlayerList : MonoBehaviour
 		return _localPlayer;
 	}
 
+	public float GetLocalLatency()
+	{
+		if (_localPlayer == null)
+			return 0;
+
+		return _localPlayer.GetLatency();
+	}
+
 	public static PlayerList Singleton()
 	{
 		return _instance;

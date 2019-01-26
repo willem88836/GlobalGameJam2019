@@ -13,7 +13,7 @@ public class LatencyTracker : NetworkBehaviour
 	{
 		_playerList = PlayerList.Singleton();
 
-		if (!isServer)
+		if (isServer)
 			StartCoroutine(PingRequest());
 	}
 
@@ -42,6 +42,5 @@ public class LatencyTracker : NetworkBehaviour
 			return;
 
 		localPlayer.PingPlayer(hostId, serverStamp);
-		Debug.Log(_playerList.GetLocalPlayer().GetLatency());
 	}
 }

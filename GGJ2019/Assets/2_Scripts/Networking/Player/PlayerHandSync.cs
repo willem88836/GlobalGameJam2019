@@ -26,21 +26,23 @@ public class PlayerHandSync : NetworkBehaviour
 	List<float> _rotateDelta = new List<float>();
 
 	[SerializeField] int _trackCount = 10;
-
 	[SerializeField] float _maxDeltaInterval = 0.5f;
+
+	NetworkPlayer _networkPlayer;
+	PlayerList _playerList;
 
 	void Awake()
 	{
 		// Default set kinematic
 		_rigid.isKinematic = true;
 
-		//_sendInterval = GetNetworkSendInterval();
-
-		//StartCoroutine(WaitForRegister());
+		_networkPlayer = GetComponent<NetworkPlayer>();
 	}
 
 	void Start()
 	{
+		_playerList = PlayerList.Singleton();
+
 		_sendInterval = GetNetworkSendInterval();
 
 		if (isServer)
@@ -225,7 +227,7 @@ public class PlayerHandSync : NetworkBehaviour
 
 		_lastVelocity = velocity;
 
-		Vector3 predictedPosition = position; // + (velocity * GetPlayerLatency());
+		Vector3 predictedPosition = position + (velocity * GetPlayerLatency());
 
 		RpcRemoteMovementUpdate(predictedPosition, velocity);
 
@@ -246,7 +248,7 @@ public class PlayerHandSync : NetworkBehaviour
 
 		_lastVelocity = velocity;
 
-		Vector3 predictedPosition = position; // + (velocity * GetLocalLatency());
+		Vector3 predictedPosition = position + (velocity * GetLocalLatency());
 
 		if (_smoothMovement != null)
 			StopCoroutine(_smoothMovement);
@@ -259,7 +261,7 @@ public class PlayerHandSync : NetworkBehaviour
 		AddMovementDelta();
 		float avgDelta = GetMovementDelta();
 
-		Vector3 predictedPosition = position; // + (velocity * GetLocalLatency());
+		Vector3 predictedPosition = position + (velocity * GetLocalLatency());
 
 		if (_smoothMovement != null)
 			StopCoroutine(_smoothMovement);
@@ -279,7 +281,7 @@ public class PlayerHandSync : NetworkBehaviour
 		float eulerLength = eulerVelocity.magnitude;
 		Vector3 localVelocity = new Vector3(0.0f, eulerLength, 0.0f);
 
-		Quaternion predictedRotation = rotation; // * Quaternion.Euler(localVelocity * GetPlayerLatency());
+		Quaternion predictedRotation = rotation * Quaternion.Euler(localVelocity * GetPlayerLatency());
 
 		RpcRemoteRotateUpdate(predictedRotation, angularVelocity);
 
@@ -303,7 +305,7 @@ public class PlayerHandSync : NetworkBehaviour
 		float eulerLength = eulerVelocity.magnitude;
 		Vector3 localVelocity = new Vector3(0.0f, eulerLength, 0.0f);
 
-		Quaternion predictedRotation = rotation; // * Quaternion.Euler(localVelocity * GetLocalLatency());
+		Quaternion predictedRotation = rotation * Quaternion.Euler(localVelocity * GetLocalLatency());
 
 		if (_smoothRotate != null)
 			StopCoroutine(_smoothRotate);
@@ -321,7 +323,7 @@ public class PlayerHandSync : NetworkBehaviour
 		float eulerLength = eulerVelocity.magnitude;
 		Vector3 localVelocity = new Vector3(0.0f, eulerLength, 0.0f);
 
-		Quaternion predictedRotation = rotation; // * Quaternion.Euler(localVelocity * GetLocalLatency());
+		Quaternion predictedRotation = rotation * Quaternion.Euler(localVelocity * GetLocalLatency());
 
 		if (_smoothRotate != null)
 			StopCoroutine(_smoothRotate);
@@ -471,7 +473,6 @@ public class PlayerHandSync : NetworkBehaviour
 		_transform.rotation = rotation;
 	}
 
-	/*
 	float GetPlayerLatency()
 	{
 		return _networkPlayer.GetLatency();
@@ -479,12 +480,8 @@ public class PlayerHandSync : NetworkBehaviour
 
 	float GetLocalLatency()
 	{
-		if (_playerList != null)
-			return _playerList.GetLocalLatency();
-
-		return 0;
+		return _playerList.GetLocalLatency();
 	}
-	*/
 
 	public Vector3 GetLastVelocity()
 	{
