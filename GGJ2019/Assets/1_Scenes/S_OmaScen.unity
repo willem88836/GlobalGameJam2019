@@ -175,7 +175,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 0
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 1008064221}
+  m_TargetTexture: {fileID: 665802631}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -311,7 +311,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e33256ab14b5848ddaf8490240986de8, type: 3}
---- !u!84 &737354367
+--- !u!84 &665802631
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -485,40 +485,8 @@ MonoBehaviour:
   sourceCamera: {fileID: 974734633}
   outlineCamera: {fileID: 152000461}
   outlineShaderMaterial: {fileID: 0}
-  renderTexture: {fileID: 1008064221}
-  extraRenderTexture: {fileID: 737354367}
---- !u!84 &1008064221
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 1024
-  m_Height: 768
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
+  renderTexture: {fileID: 665802631}
+  extraRenderTexture: {fileID: 1221341602}
 --- !u!1001 &1146067583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -634,6 +602,38 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 687831335213128851, guid: ccf93381fc6186541b8fa91f19a10852, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ccf93381fc6186541b8fa91f19a10852, type: 3}
+--- !u!84 &1221341602
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 1024
+  m_Height: 768
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!1001 &1343930235
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -932,10 +932,7 @@ MonoBehaviour:
     Y: 4
   _objectContainer: {fileID: 1659908699}
   _objectives:
-  - {fileID: 6523611572672446066, guid: 5a3717db4d74f1b4fa7c1bb231de9f61, type: 3}
-  - {fileID: 2115293957627484125, guid: 06e536d4d602cba4cba337cb9461f4d5, type: 3}
-  - {fileID: 6708065635052310177, guid: b0d915f62261b0040be89a30322c4830, type: 3}
-  - {fileID: 3612113408452483285, guid: 96cb89dfda72b7748ba77eace474f056, type: 3}
+  - {fileID: 1848400230394687981, guid: e46df155ac39ecb48ac584c9f1eceb88, type: 3}
   _edibles:
   - {fileID: 6523611572672446066, guid: 5a3717db4d74f1b4fa7c1bb231de9f61, type: 3}
   - {fileID: 2115293957627484125, guid: 06e536d4d602cba4cba337cb9461f4d5, type: 3}
@@ -1559,8 +1556,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e851d23e9bb444a84bbb5a63e0cd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 0}
+  _throwForceMultiplier: 2
   Grabbed: 0
   _heightThreshold: -2
+  _originPosition: {x: 0, y: 0, z: 0}
+  _originRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!4 &4108184701000573860
 Transform:
   m_ObjectHideFlags: 0
@@ -2006,8 +2033,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e851d23e9bb444a84bbb5a63e0cd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 0}
+  _throwForceMultiplier: 2
   Grabbed: 0
   _heightThreshold: -2
+  _originPosition: {x: 0, y: 0, z: 0}
+  _originRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!4 &7710696562726064657
 Transform:
   m_ObjectHideFlags: 0
