@@ -6,10 +6,10 @@ public class HandMover : MonoBehaviour
 	[HideInInspector] public Rigidbody Rigidbody;
 
 	[SerializeField] Transform _head;
+	[SerializeField] Collider _tableZone;
 
 	[SerializeField] float _speedHorizontal;
 	[SerializeField] float _speedVertical;
-	//[SerializeField] float _breakSpeed;
 
 	Vector3 _velocity;
 
@@ -17,8 +17,8 @@ public class HandMover : MonoBehaviour
 	[SerializeField] float _dampTime = 0.5f;
 
 	[Space]
-	[SerializeField] Vector3 _minMoveBoundaries;
-	[SerializeField] Vector3 _maxMoveBoundaries;
+	Vector3 _minMoveBoundaries;
+	Vector3 _maxMoveBoundaries;
 
 	[Space]
 	[Header("Rotation")]
@@ -31,12 +31,26 @@ public class HandMover : MonoBehaviour
 	void Start()
 	{
 		Rigidbody = GetComponent<Rigidbody>();
+
+		SetMoveBoundaries();
 	}
 
 	void Update()
     {
 		Move();
 		Rotate();
+	}
+
+	void SetMoveBoundaries()
+	{
+		_minMoveBoundaries.x = _tableZone.bounds.min.x;
+		_maxMoveBoundaries.x = _tableZone.bounds.max.x;
+
+		_minMoveBoundaries.y = _tableZone.bounds.min.y;
+		_maxMoveBoundaries.y = _tableZone.bounds.max.y;
+
+		_minMoveBoundaries.z = _tableZone.bounds.min.z;
+		_maxMoveBoundaries.z = _tableZone.bounds.max.z;
 	}
 
 	void Move()
@@ -70,7 +84,7 @@ public class HandMover : MonoBehaviour
 
 	void MovementBoundaries()
 	{
-		transform.position = new Vector3(
+		transform.localPosition = new Vector3(
 			Mathf.Clamp(transform.position.x,
 			_minMoveBoundaries.x,
 			_maxMoveBoundaries.x),
