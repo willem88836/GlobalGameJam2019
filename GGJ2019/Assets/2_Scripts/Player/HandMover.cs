@@ -33,9 +33,9 @@ public class HandMover : MonoBehaviour
 
 		float moveY = 0;
 		if (Input.GetAxisRaw("LeftTrigger") < 0)
-			moveY = 1;
-		else if (Input.GetKey(KeyCode.Joystick1Button4))
 			moveY = -1;
+		else if (Input.GetKey(KeyCode.Joystick1Button4))
+			moveY = 1;
 		
 		// makes sure to aim the hand based on head-rotation
 		Quaternion _relativeRotation = new Quaternion(
