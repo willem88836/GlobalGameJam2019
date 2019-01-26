@@ -16,6 +16,10 @@ public class HandMover : MonoBehaviour
 	Vector3 _smoothVelocity = Vector3.zero;
 	[SerializeField] float _dampTime = 0.5f;
 
+	[Space]
+	[SerializeField] Vector3 _minBoundaries;
+	[SerializeField] Vector3 _maxBoundaries;
+
 	void Start()
 	{
 		Rigidbody = GetComponent<Rigidbody>();
@@ -51,6 +55,23 @@ public class HandMover : MonoBehaviour
 			moveZ * _speedHorizontal);
 
 		Rigidbody.velocity = Vector3.SmoothDamp(Rigidbody.velocity, _velocity, ref _smoothVelocity, _dampTime);
+
+		MovementBoundaries();
+	}
+
+	void MovementBoundaries()
+	{
+		transform.position = new Vector3(
+			Mathf.Clamp(transform.position.x,
+			_minBoundaries.x,
+			_maxBoundaries.x),
+			Mathf.Clamp(transform.position.y,
+			_minBoundaries.y,
+			_maxBoundaries.y),
+			Mathf.Clamp(transform.position.z,
+			_minBoundaries.z,
+			_maxBoundaries.z)
+			);
 	}
 
 	/*
