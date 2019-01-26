@@ -94,8 +94,9 @@ public class HandGrabber : MonoBehaviour
 	/// </summary>
 	void HoldObject()
 	{
-		_grabbedObject.transform.position = transform.position;
-		_grabbedObject.transform.rotation = transform.rotation;
+		Transform grabPivot = _grabbedObject.transform;
+		grabPivot.position = transform.position;
+		grabPivot.rotation = transform.rotation;
 	}
 
 	void StartAnimateOpen(float timeFrame)
