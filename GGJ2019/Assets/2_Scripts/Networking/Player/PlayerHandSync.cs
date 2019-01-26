@@ -69,7 +69,7 @@ public class PlayerHandSync : NetworkBehaviour
 
 		//_transform.GetComponent<Collider>().isTrigger = true;
 
-		Debug.Log("Setting local movement");
+		//Debug.Log("Setting local movement");
 
 		DisableMovementSync();
 

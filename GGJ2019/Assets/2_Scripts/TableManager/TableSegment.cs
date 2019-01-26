@@ -5,6 +5,8 @@ public class TableSegment : MonoBehaviour
 {
 	private List<IDisgusting> _disgustingObjects = new List<IDisgusting>();
 
+	public SpawnSphere SpawnLocation;
+
 	PlayerSlot _slot;
 
 	private void Awake()

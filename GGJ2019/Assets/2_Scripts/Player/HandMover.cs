@@ -27,9 +27,12 @@ public class HandMover : MonoBehaviour
 	float _rotX = 0.0f;
 	float _rotY = 0.0f;
 
+	[HideInInspector] public bool MinigameActive;
+
 	void Start()
 	{
 		Rigidbody = GetComponent<Rigidbody>();
+
 
 		//SetMoveBoundaries();
 	}
@@ -43,7 +46,9 @@ public class HandMover : MonoBehaviour
 	void Move()
 	{
 		float moveZ = Input.GetAxis("Horizontal2");
-		float moveX = Input.GetAxis("Horizontal1");
+		float moveX = 0;
+		if (MinigameActive == false)
+			moveX = Input.GetAxis("Horizontal1");
 
 		float moveY = 0;
 		if (Input.GetAxisRaw("LeftTrigger") < 0)
@@ -72,7 +77,6 @@ public class HandMover : MonoBehaviour
 
 	void Rotate()
 	{
-
 		float moveY = Input.GetAxis("DPadHorizontal");
 		float moveX = Input.GetAxis("DPadVertical");
 

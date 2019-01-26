@@ -33,7 +33,7 @@ public class PlayerSetup : NetworkBehaviour
 
 	void OnDestroy()
 	{
-		Debug.Log("A player has left");
+		//Debug.Log("A player has left");
 		_playerList.RemovePlayer(_networkPlayer);
 
 		if (isServer)
@@ -44,7 +44,7 @@ public class PlayerSetup : NetworkBehaviour
 
 	void LocalSetup()
 	{
-		Debug.Log("A LOCAL player has joined");
+		//Debug.Log("A LOCAL player has joined");
 
 		for (int i = 0; i < _localBehaviours.Length; i++)
 		{
@@ -65,7 +65,7 @@ public class PlayerSetup : NetworkBehaviour
 
 	void RemoteSetup()
 	{
-		Debug.Log("A REMOTE player has joined");
+		//Debug.Log("A REMOTE player has joined");
 
 		for (int i = 0; i < _localBehaviours.Length; i++)
 		{

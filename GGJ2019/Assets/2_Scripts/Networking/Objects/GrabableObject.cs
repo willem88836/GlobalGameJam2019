@@ -26,6 +26,12 @@ public class GrabableObject : NetworkBehaviour, IGrabable
 		_netId = GetComponent<NetworkIdentity>().netId;
 	}
 
+	void OnDestroy()
+	{
+		if (isServer && _playerGrabber != null)
+			_playerGrabber.ForceRelease();
+	}
+
 	public void OnGrab(Transform point, PlayerGrabber grabber)
 	{
 		_playerGrabber = grabber;
@@ -40,6 +46,9 @@ public class GrabableObject : NetworkBehaviour, IGrabable
 
 	public void OnCarry(Transform point)
 	{
+		//if (this == null)
+		//	return;
+
 		transform.position = point.position;
 		transform.rotation = point.rotation;
 	}
@@ -49,7 +58,7 @@ public class GrabableObject : NetworkBehaviour, IGrabable
 		_rigid.isKinematic = false;
 		_rigid.velocity = velocity * _velocityMultiplier;
 
-		if (isServer)
+		if (isServer && gameObject.activeSelf)
 		{
 			_objectSync.SetServerMovement();
 			_objectSync.SetServerRotate();

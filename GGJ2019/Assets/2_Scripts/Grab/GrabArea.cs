@@ -31,6 +31,8 @@ public class GrabArea : MonoBehaviour
 
 	public Transform GetClosestGrabable()
 	{
+		_grabables.RemoveAll(x => x == null);
+
 		float shortDistance = float.MaxValue;
 		int shortIndex = -1;
 

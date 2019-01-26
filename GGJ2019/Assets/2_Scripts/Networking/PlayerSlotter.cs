@@ -82,6 +82,20 @@ public class PlayerSlotter : NetworkBehaviour
 	}
 
 	[Server]
+	public PlayerSlot GetSlot(NetworkPlayer player)
+	{
+		List<PlayerSlot> keys = new List<PlayerSlot>(_playerDictionary.Keys);
+
+		for (int i = 0; i < _playerDictionary.Count; i++)
+		{
+			if (_playerDictionary[keys[i]] == player)
+				return keys[i];
+		}
+
+		return null;
+	}
+
+	//[Server]
 	public static PlayerSlotter Singleton()
 	{
 		return _instance;

@@ -21,10 +21,13 @@ public class HandGrabber : MonoBehaviour
 	void Start()
 	{
 		_handMover = transform.parent.GetComponent<HandMover>();
+		_nearestObject = null;
 	}
 
 	void Update()
     {
+		ClearMissingObjects();
+
 		if (_isGrabbing)
 		{
 			if (Input.GetAxisRaw("RightTrigger") >= 0)
@@ -60,6 +63,17 @@ public class HandGrabber : MonoBehaviour
 		_grabbedObject.Grab();
 
 		StartAnimateOpen(0.17f); // eventually base this number on a value in GrabObject
+	}
+
+	void ClearMissingObjects()
+	{
+		for (int i = _grabables.Count - 1; i >= 0; i--)
+		{
+			if (_grabables[i] == null)
+			{
+				_grabables.RemoveAt(i);
+			}
+		}
 	}
 
 	void GetClosestObject()
