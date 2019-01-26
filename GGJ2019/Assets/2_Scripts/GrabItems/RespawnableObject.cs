@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Spoon : GrabObject
+public class RespawnableObject : GrabObject
 {
 	[SerializeField] private float _heightThreshold = -2f;
 
@@ -8,8 +8,9 @@ public class Spoon : GrabObject
 	private Quaternion _originRotation;
 
 
-	private void Start()
+	public override void Start()
 	{
+		base.Start();
 		_originPosition = transform.position;
 		_originRotation = transform.rotation;
 	}
