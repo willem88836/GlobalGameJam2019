@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using cakeslice;
 
 public class HandGrabber : MonoBehaviour
 {
 	HandMover _handMover;
 
 	bool _isGrabbing;
+	GrabObject _nearestObject;
 	GrabObject _grabbedObject;
 
 	List<GrabObject> _grabables = new List<GrabObject>();
@@ -30,6 +32,8 @@ public class HandGrabber : MonoBehaviour
 		}
 		else
 		{
+			GetClosestObject();
+
 			if (Input.GetAxisRaw("RightTrigger") < 0)
 				Grab();
 		}
@@ -49,30 +53,42 @@ public class HandGrabber : MonoBehaviour
 			StartAnimateOpen(1);
 			return;
 		}
-			
-		
-		_grabbedObject = _grabables[0];
 
-		if (_grabables.Count > 1)
-			GetClosestObject();
+		_grabbedObject = _nearestObject;
+		_nearestObject.GetComponent<Outline>().color = 0;
 
 		_grabbedObject.Grab();
 
-		StartAnimateOpen(0.17f);
+		StartAnimateOpen(0.17f); // eventually base this number on a value in GrabObject
 	}
 
 	void GetClosestObject()
 	{
+		if (_grabables.Count == 0)
+		{
+			if (_nearestObject != null)
+			{
+				_nearestObject.GetComponent<Outline>().color = 0;
+				_nearestObject = null;
+			}
+			return;
+		}
+
+		_nearestObject = _grabables[0];
+
 		for (int i = 0; i < _grabables.Count; i++)
 		{
-			float closestDistance = Vector3.Distance(transform.position, _grabbedObject.transform.position);
+			float closestDistance = Vector3.Distance(transform.position, _nearestObject.transform.position);
 			float thisDistance = Vector3.Distance(transform.position, _grabables[i].transform.position);
 
 			if (thisDistance < closestDistance)
 			{
-				_grabbedObject = _grabables[i];
+				_nearestObject.GetComponent<Outline>().color = 0;
+				_nearestObject = _grabables[i];
 			}
 		}
+
+		_nearestObject.GetComponent<Outline>().color = 2;
 	}
 
 	/// <summary>
