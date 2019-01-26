@@ -467,11 +467,16 @@ MonoBehaviour:
     X: 2
     Y: 4
   _objectContainer: {fileID: 1659908699}
+  _objectives:
+  - {fileID: 6523611572672446066, guid: 5a3717db4d74f1b4fa7c1bb231de9f61, type: 3}
+  - {fileID: 2115293957627484125, guid: 06e536d4d602cba4cba337cb9461f4d5, type: 3}
+  - {fileID: 6708065635052310177, guid: b0d915f62261b0040be89a30322c4830, type: 3}
+  - {fileID: 3612113408452483285, guid: 96cb89dfda72b7748ba77eace474f056, type: 3}
   _edibles:
-  - {fileID: 958646074864225196, guid: 5a3717db4d74f1b4fa7c1bb231de9f61, type: 3}
-  - {fileID: 5376810916118848003, guid: 06e536d4d602cba4cba337cb9461f4d5, type: 3}
-  - {fileID: 779856696977800063, guid: b0d915f62261b0040be89a30322c4830, type: 3}
-  - {fileID: 7342419551304428811, guid: 96cb89dfda72b7748ba77eace474f056, type: 3}
+  - {fileID: 6523611572672446066, guid: 5a3717db4d74f1b4fa7c1bb231de9f61, type: 3}
+  - {fileID: 2115293957627484125, guid: 06e536d4d602cba4cba337cb9461f4d5, type: 3}
+  - {fileID: 6708065635052310177, guid: b0d915f62261b0040be89a30322c4830, type: 3}
+  - {fileID: 3612113408452483285, guid: 96cb89dfda72b7748ba77eace474f056, type: 3}
   _segmentCollection: {fileID: 910024294}
 --- !u!1 &1545949593 stripped
 GameObject:
@@ -592,9 +597,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d47bba365713d40468bddee151669dcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _grabbedLayer:
-    serializedVersion: 2
-    m_Bits: 512
+  _grabbedLayer: 9
 --- !u!114 &2016859601 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2778005388900251897, guid: ff51b2fa261899043aef3bb7b0e2711f,

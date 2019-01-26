@@ -8,7 +8,8 @@ public class ObjectiveManager : MonoBehaviour
 	[SerializeField, Int2Range(0, 20)] private Int2 _ediblesRange;
 	[SerializeField, Int2Range(0, 10)] private Int2 _objectiveRange;
 	[SerializeField] private Transform _objectContainer;
-	[SerializeField] private ObjectiveObject[] _edibles;
+	[SerializeField] private GameObject[] _objectives;
+	[SerializeField] private GameObject[] _edibles;
 
 	[SerializeField] private TableSegmentCollection _segmentCollection;
 
@@ -43,6 +44,12 @@ public class ObjectiveManager : MonoBehaviour
 	}
 
 
+	private void OnComplete(IObjective completed)
+	{
+		_playerObjectives[completed.Player].Progress++;
+		// TODO: somethign with points and effects or something	? 
+	}
+
 	private void Clear()
 	{
 		for (int i = _objectContainer.childCount - 1; i >= 0; i--)
@@ -57,12 +64,14 @@ public class ObjectiveManager : MonoBehaviour
 		int objectiveCount = Random.Range(_objectiveRange.X, _objectiveRange.Y);
 		int ediblesCount = Random.Range(_ediblesRange.X, _ediblesRange.Y) - objectiveCount;
 
-		ObjectiveObject edible = _edibles[Random.Range(0, _edibles.Length)];
+		GameObject EdibleObjectivePrefab = _objectives[Random.Range(0, _edibles.Length)];
 
+		IObjective objectiveObject = EdibleObjectivePrefab.GetComponent<IObjective>();
 		Objective objective = new Objective()
 		{
 			Count = objectiveCount,
-			Type = edible.Type
+			Type = objectiveObject.Type,
+			Progress = 0,
 		};
 
 		// TODO: instead of the key use the players' seat Index.
@@ -72,14 +81,18 @@ public class ObjectiveManager : MonoBehaviour
 		for (int i = 0; i < objectiveCount; i++)
 		{
 			spawn.GetSpawn(out pos, out rot);
-			ObjectiveObject newEdible = Instantiate(edible, pos, rot, _objectContainer);
+			GameObject newObjectiveObject = Instantiate(EdibleObjectivePrefab, pos, rot, _objectContainer);
+			IObjective newObjective = newObjectiveObject.GetComponent<IObjective>();
+			newObjective.Type = objective.Type;
+			newObjective.Player = key;
+			newObjective.OnComplete = OnComplete;
 		}
 
 		for (int i = 0; i < ediblesCount; i++)
 		{
 			spawn.GetSpawn(out pos, out rot);
-			edible = _edibles[Random.Range(0, _edibles.Length)];
-			ObjectiveObject newEdible = Instantiate(edible, pos, rot, _objectContainer);
+			GameObject prefab = _edibles[Random.Range(0, _edibles.Length)];
+			Instantiate(prefab, pos, rot, _objectContainer);
 		}
 
 		return objective;
@@ -101,11 +114,11 @@ public class ObjectiveManager : MonoBehaviour
 			_playerObjectives.Remove(id);
 		}
 	}
-
 }
 
 public class Objective
 {
 	public int Type;
 	public int Count;
+	public int Progress;
 }
