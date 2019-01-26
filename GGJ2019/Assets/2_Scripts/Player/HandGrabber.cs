@@ -9,6 +9,7 @@ public class HandGrabber : MonoBehaviour
 	GrabObject _grabbedObject;
 
 	List<GrabObject> _grabables = new List<GrabObject>();
+	List<int> _ignoredObjects = new List<int>();
 
 	void Start()
 	{
@@ -44,13 +45,16 @@ public class HandGrabber : MonoBehaviour
 		if (_grabables.Count > 1)
 			GetClosestObject();
 
-		_grabbedObject.Grab();
+		_grabbedObject.Grab(this);
 	}
 
 	void GetClosestObject()
 	{
 		for (int i = 0; i < _grabables.Count; i++)
 		{
+			if (_ignoredObjects.Contains(_grabables[i].GetInstanceID()))
+				continue;
+
 			float closestDistance = Vector3.Distance(transform.position, _grabbedObject.transform.position);
 			float thisDistance = Vector3.Distance(transform.position, _grabables[i].transform.position);
 
@@ -64,7 +68,7 @@ public class HandGrabber : MonoBehaviour
 	/// <summary>
 	///		Release the grabbed object
 	/// </summary>
-	void ReleaseGrab()
+	public void ReleaseGrab()
 	{
 		_isGrabbing = false;
 		if (_grabbedObject == null)
@@ -72,6 +76,12 @@ public class HandGrabber : MonoBehaviour
 
 		_grabbedObject.Release(_handMover.Rigidbody.velocity);
 		_grabbedObject = null;
+	}
+
+	public void ForceRelease()
+	{
+		_ignoredObjects.Add(_grabbedObject.GetInstanceID());
+		ReleaseGrab();
 	}
 
 	/// <summary>
@@ -85,13 +95,23 @@ public class HandGrabber : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		if (other.GetComponent<GrabObject>())
-			_grabables.Add(other.GetComponent<GrabObject>());;
+		GrabObject obj = other.GetComponent<GrabObject>();
+		if (obj != null && !_grabables.Contains(obj))
+			_grabables.Add(obj);
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.GetComponent<GrabObject>())
-			_grabables.Remove(other.GetComponent<GrabObject>());
+		GrabObject obj = other.GetComponent<GrabObject>();
+		if (obj != null && _grabables.Contains(obj))
+		{
+			_grabables.Remove(obj);
+
+			int id = obj.GetInstanceID();
+			if (_ignoredObjects.Contains(id))
+			{
+				_ignoredObjects.Remove(id);
+			}
+		}
 	}
 }

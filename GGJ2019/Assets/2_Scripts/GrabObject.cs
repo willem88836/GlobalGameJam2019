@@ -5,12 +5,14 @@ public class GrabObject : MonoBehaviour
 {
 	// will eventually also contain information about how far the hand closes, dirt value, et cetera
 
+	public HandGrabber GrabParent;
+
 	Rigidbody _rigidbody;
 
 	int _throwForceMultiplier = 2;
 
-	int _defaultLayer = 0; 
-	int _grabbedLayer = 9;
+	public static int DEFAULTLAYER = 0; 
+	public static int GRABBEDLAYER = 9;
 
 	bool _released = false;
 
@@ -19,15 +21,17 @@ public class GrabObject : MonoBehaviour
 		_rigidbody = GetComponent<Rigidbody>();	
 	}
 
-	public void Grab()
+	public void Grab(HandGrabber parent)
 	{
-		gameObject.layer = _grabbedLayer;
+		GrabParent = parent;
+		gameObject.layer = GRABBEDLAYER;
 		_rigidbody.useGravity = false;
 	}
 
 	public void Release(Vector3 velocity)
 	{
-		gameObject.layer = _defaultLayer;
+		GrabParent = null;
+		gameObject.layer = DEFAULTLAYER;
 		_rigidbody.useGravity = true;
 		_rigidbody.velocity = velocity * _throwForceMultiplier;
 	}

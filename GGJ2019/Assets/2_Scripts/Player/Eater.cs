@@ -3,15 +3,13 @@ using UnityEngine;
 
 public class Eater : MonoBehaviour
 {
-	[SerializeField] public int _grabbedLayer = 9;
-
 	private List<GameObject> _currentEdibles = new List<GameObject>();
 
 
 	private void OnTriggerEnter(Collider other)
 	{
 		IEdible edible = other.GetComponent<IEdible>();
-		if (other.gameObject.layer == _grabbedLayer && edible != null && !_currentEdibles.Contains(other.gameObject))
+		if (other.gameObject.layer == GrabObject.GRABBEDLAYER && edible != null && !_currentEdibles.Contains(other.gameObject))
 		{
 			_currentEdibles.Add(other.gameObject);
 		}
@@ -20,7 +18,7 @@ public class Eater : MonoBehaviour
 	private void OnTriggerExit(Collider other)
 	{
 		IEdible edible = other.GetComponent<IEdible>();
-		if (other.gameObject.layer == _grabbedLayer && edible != null && _currentEdibles.Contains(other.gameObject))
+		if (other.gameObject.layer == GrabObject.GRABBEDLAYER && edible != null && _currentEdibles.Contains(other.gameObject))
 		{
 			_currentEdibles.Remove(other.gameObject);
 		}
@@ -32,7 +30,7 @@ public class Eater : MonoBehaviour
 		for (int i = _currentEdibles.Count - 1; i >= 0; i--)
 		{
 			GameObject edibleObject = _currentEdibles[i];
-			if(edibleObject.layer != _grabbedLayer)
+			if(edibleObject.layer != GrabObject.GRABBEDLAYER)
 			{
 				IEdible edible = edibleObject.GetComponent<IEdible>();
 				edible.OnEat(this);
