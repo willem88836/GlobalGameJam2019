@@ -25,10 +25,10 @@ public class NetworkPlayer : NetworkBehaviour
 	public void PreparePlayer(PlayerSlot slot)
 	{
 		_handSync.ForceSync(slot.HandStartPoint);
-		_handSync.SetLocalMovement();
-		_handSync.SetLocalRotate();
+		//_handSync.SetLocalMovement();
+		//_handSync.SetLocalRotate();
 
 		_headSync.ForceSync(slot.HeadStartPoint);
-		_headSync.SetLocalRotate();
+		//_headSync.SetLocalRotate();
 	}
 }

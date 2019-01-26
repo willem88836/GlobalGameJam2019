@@ -43,6 +43,9 @@ public class PlayerHandSync : NetworkBehaviour
 	{
 		_sendInterval = GetNetworkSendInterval();
 
+		if (isServer)
+			PlayerList.Singleton().OnPlayerJoined += delegate { ForceSync(_transform); };
+
 	}
 
 	[Server]
@@ -441,29 +444,28 @@ public class PlayerHandSync : NetworkBehaviour
 		_lastMoveUpdate = Time.time;
 		_lastRotateUpdate = Time.time;
 
-		if (_syncMovement != null)
-			StopCoroutine(_syncMovement);
+		DisableMovementSync();
 
-		if (_syncRotate != null)
-			StopCoroutine(_syncRotate);
+		DisableRotateSync();
 
 		_transform.position = point.position;
 		_transform.rotation = point.rotation;
 
 		RpcForceSync(point.position, point.rotation);
+
+		SetLocalMovement();
+		SetLocalRotate();
 	}
 
-	[ClientRpc]
+	[ClientRpc(channel = 0)]
 	void RpcForceSync(Vector3 position, Quaternion rotation)
 	{
 		_lastMoveUpdate = Time.time;
 		_lastRotateUpdate = Time.time;
 
-		if (_syncMovement != null)
-			StopCoroutine(_syncMovement);
+		DisableMovementSync();
 
-		if (_syncRotate != null)
-			StopCoroutine(_syncRotate);
+		DisableRotateSync();
 
 		_transform.position = position;
 		_transform.rotation = rotation;

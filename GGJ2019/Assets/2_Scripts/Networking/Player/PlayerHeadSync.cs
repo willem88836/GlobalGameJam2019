@@ -32,6 +32,11 @@ public class PlayerHeadSync : NetworkBehaviour
 	void Start()
 	{
 		_sendInterval = GetNetworkSendInterval();
+
+		if (isServer)
+			PlayerList.Singleton().OnPlayerJoined += delegate { ForceSync(_transform); };
+
+		//ForceSync();
 	}
 
 	[Server]
@@ -205,22 +210,22 @@ public class PlayerHeadSync : NetworkBehaviour
 	{
 		_lastRotateUpdate = Time.time;
 
-		if (_syncRotate != null)
-			StopCoroutine(_syncRotate);
+		DisableRotateSync();
 
 		_transform.position = point.position;
 		_transform.rotation = point.rotation;
 
 		RpcForceSync(point.position, point.rotation);
+
+		SetLocalRotate();
 	}
 
-	[ClientRpc]
+	[ClientRpc(channel = 0)]
 	void RpcForceSync(Vector3 position, Quaternion rotation)
 	{
 		_lastRotateUpdate = Time.time;
 
-		if (_syncRotate != null)
-			StopCoroutine(_syncRotate);
+		DisableRotateSync();
 
 		_transform.position = position;
 		_transform.rotation = rotation;
