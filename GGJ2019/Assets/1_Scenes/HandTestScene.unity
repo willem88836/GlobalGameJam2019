@@ -1469,7 +1469,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 0}
   _head: {fileID: 90806033}
-  _speed: 20
+  _speedHorizontal: 20
+  _speedVertical: 20
+  _dampTime: 0.5
 --- !u!135 &888271885
 SphereCollider:
   m_ObjectHideFlags: 0
