@@ -175,7 +175,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 0
   m_RenderingPath: 1
-  m_TargetTexture: {fileID: 665802631}
+  m_TargetTexture: {fileID: 1279398645}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
@@ -311,38 +311,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e33256ab14b5848ddaf8490240986de8, type: 3}
---- !u!84 &665802631
-RenderTexture:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_ForcedFallbackFormat: 4
-  m_DownscaleFallback: 0
-  m_Width: 1024
-  m_Height: 768
-  m_AntiAliasing: 1
-  m_DepthFormat: 1
-  m_ColorFormat: 7
-  m_MipMap: 0
-  m_GenerateMips: 1
-  m_SRGB: 0
-  m_UseDynamicScale: 0
-  m_BindMS: 0
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 1
-    m_WrapV: 1
-    m_WrapW: 1
-  m_Dimension: 2
-  m_VolumeDepth: 1
 --- !u!114 &910024294 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9072380668988705189, guid: 331a7dddeffb6cd428d653af53ac6d8d,
@@ -485,8 +453,8 @@ MonoBehaviour:
   sourceCamera: {fileID: 974734633}
   outlineCamera: {fileID: 152000461}
   outlineShaderMaterial: {fileID: 0}
-  renderTexture: {fileID: 665802631}
-  extraRenderTexture: {fileID: 1221341602}
+  renderTexture: {fileID: 1279398645}
+  extraRenderTexture: {fileID: 1580143463}
 --- !u!1001 &1146067583
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -602,7 +570,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 687831335213128851, guid: ccf93381fc6186541b8fa91f19a10852, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ccf93381fc6186541b8fa91f19a10852, type: 3}
---- !u!84 &1221341602
+--- !u!84 &1279398645
 RenderTexture:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -614,8 +582,8 @@ RenderTexture:
     Hash: 00000000000000000000000000000000
   m_ForcedFallbackFormat: 4
   m_DownscaleFallback: 0
-  m_Width: 1024
-  m_Height: 768
+  m_Width: 1920
+  m_Height: 1080
   m_AntiAliasing: 1
   m_DepthFormat: 1
   m_ColorFormat: 7
@@ -939,6 +907,38 @@ MonoBehaviour:
   - {fileID: 6708065635052310177, guid: b0d915f62261b0040be89a30322c4830, type: 3}
   - {fileID: 3612113408452483285, guid: 96cb89dfda72b7748ba77eace474f056, type: 3}
   _segmentCollection: {fileID: 910024294}
+--- !u!84 &1580143463
+RenderTexture:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_ForcedFallbackFormat: 4
+  m_DownscaleFallback: 0
+  m_Width: 1920
+  m_Height: 1080
+  m_AntiAliasing: 1
+  m_DepthFormat: 1
+  m_ColorFormat: 7
+  m_MipMap: 0
+  m_GenerateMips: 1
+  m_SRGB: 0
+  m_UseDynamicScale: 0
+  m_BindMS: 0
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 1
+    m_WrapV: 1
+    m_WrapW: 1
+  m_Dimension: 2
+  m_VolumeDepth: 1
 --- !u!65 &1604400417 stripped
 BoxCollider:
   m_CorrespondingSourceObject: {fileID: 1604400417, guid: 331a7dddeffb6cd428d653af53ac6d8d,
@@ -1582,6 +1582,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   _rigidbody: {fileID: 0}
   _throwForceMultiplier: 2
   Grabbed: 0
@@ -2031,6 +2043,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73e851d23e9bb444a84bbb5a63e0cd97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
   m_Name: 

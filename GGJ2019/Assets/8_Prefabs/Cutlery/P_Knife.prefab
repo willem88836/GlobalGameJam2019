@@ -152,7 +152,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1669376257341778130}
   - component: {fileID: 1826923651441827579}
-  - component: {fileID: 6173376456466238806}
+  - component: {fileID: 868395440124963402}
   m_Layer: 0
   m_Name: Knifetip
   m_TagString: Untagged
@@ -187,7 +187,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.65, y: 0.25, z: 0.2}
   m_Center: {x: -0.75, y: 0.05, z: 0}
---- !u!114 &6173376456466238806
+--- !u!114 &868395440124963402
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -196,6 +196,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8511864638403245088}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f20c1973340a2f84fbc770e6fd6cee8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ee85ab811c46d54da2fba9742069b1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

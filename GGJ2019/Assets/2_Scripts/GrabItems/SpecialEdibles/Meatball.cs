@@ -33,6 +33,5 @@ public class Meatball : GrabObject, IDisgusting, ISliceable, IObjective
 		}
 
 		Destroy(this);
-		Debug.Break();
 	}
 }
