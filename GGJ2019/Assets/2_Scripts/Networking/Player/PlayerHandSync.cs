@@ -26,6 +26,8 @@ public class PlayerHandSync : NetworkBehaviour
 	[SerializeField] int _trackCount = 10;
 	[SerializeField] float _maxDeltaInterval = 0.5f;
 
+	Vector3 _lastVelocity = Vector3.zero;
+
 	NetworkPlayer _networkPlayer;
 	PlayerList _playerList;
 
@@ -222,6 +224,8 @@ public class PlayerHandSync : NetworkBehaviour
 	[Command]
 	void CmdMovementUpdate(Vector3 position, Vector3 velocity)
 	{
+		_lastVelocity = velocity;
+
 		AddMovementDelta();
 		float avgDelta = GetMovementDelta();
 
@@ -237,6 +241,8 @@ public class PlayerHandSync : NetworkBehaviour
 	[ClientRpc]
 	void RpcRemoteMovementUpdate(Vector3 position, Vector3 velocity)
 	{
+		_lastVelocity = velocity;
+
 		// Only sync from server on non local players
 		if (isLocalPlayer)
 			return;
@@ -254,6 +260,8 @@ public class PlayerHandSync : NetworkBehaviour
 	[ClientRpc]
 	void RpcMovementUpdate(Vector3 position, Vector3 velocity)
 	{
+		_lastVelocity = velocity;
+
 		AddMovementDelta();
 		float avgDelta = GetMovementDelta();
 
@@ -472,6 +480,11 @@ public class PlayerHandSync : NetworkBehaviour
 	float GetPlayerLatency()
 	{
 		return _networkPlayer.GetLatency();
+	}
+
+	public Vector3 GetLastVelocity()
+	{
+		return _lastVelocity;
 	}
 
 	float GetLocalLatency()
