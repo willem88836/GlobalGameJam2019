@@ -7,13 +7,18 @@ public class HandMover : MonoBehaviour
 
 	[SerializeField] Transform _head;
 
-	[SerializeField] float _speed;
+	[SerializeField] float _speedHorizontal;
+	[SerializeField] float _speedVertical;
 	//[SerializeField] float _breakSpeed;
 
 	Vector3 _velocity;
 
 	Vector3 _smoothVelocity = Vector3.zero;
-	float _dampTime = 0.5f;
+	[SerializeField] float _dampTime = 0.5f;
+
+	[Space]
+	[SerializeField] Vector3 _minBoundaries;
+	[SerializeField] Vector3 _maxBoundaries;
 
 	void Start()
 	{
@@ -32,9 +37,9 @@ public class HandMover : MonoBehaviour
 
 		float moveY = 0;
 		if (Input.GetAxisRaw("LeftTrigger") < 0)
-			moveY = 1;
-		else if (Input.GetKey(KeyCode.Joystick1Button4))
 			moveY = -1;
+		else if (Input.GetKey(KeyCode.Joystick1Button4))
+			moveY = 1;
 		
 		// makes sure to aim the hand based on head-rotation
 		Quaternion _relativeRotation = new Quaternion(
@@ -44,11 +49,29 @@ public class HandMover : MonoBehaviour
 			_head.rotation.w
 			);
 
-		Vector3 direction = _relativeRotation * new Vector3(moveX, moveY, moveZ);
-
-		_velocity = direction * _speed;
+		_velocity = _relativeRotation * new Vector3(
+			moveX * _speedHorizontal,
+			moveY * _speedVertical,
+			moveZ * _speedHorizontal);
 
 		Rigidbody.velocity = Vector3.SmoothDamp(Rigidbody.velocity, _velocity, ref _smoothVelocity, _dampTime);
+
+		MovementBoundaries();
+	}
+
+	void MovementBoundaries()
+	{
+		transform.position = new Vector3(
+			Mathf.Clamp(transform.position.x,
+			_minBoundaries.x,
+			_maxBoundaries.x),
+			Mathf.Clamp(transform.position.y,
+			_minBoundaries.y,
+			_maxBoundaries.y),
+			Mathf.Clamp(transform.position.z,
+			_minBoundaries.z,
+			_maxBoundaries.z)
+			);
 	}
 
 	/*
