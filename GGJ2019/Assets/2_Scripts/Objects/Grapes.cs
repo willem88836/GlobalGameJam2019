@@ -38,8 +38,8 @@ public class Grapes : MonoBehaviour, IObjective, IEdible, IDisgusting
 			float vel = (currentPosition - _previousPosition).magnitude;
 			if (vel >= _maxVelocity)
 			{
+				// TODO: Do something with force release on the server.
 				GetComponent<GrabObject>().GrabParent.ForceRelease();
-				Debug.Log("Relaese");
 			}
 		}
 		_previousPosition = currentPosition;
