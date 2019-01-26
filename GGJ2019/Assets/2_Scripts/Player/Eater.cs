@@ -32,7 +32,7 @@ public class Eater : MonoBehaviour
 		for (int i = _currentEdibles.Count - 1; i >= 0; i--)
 		{
 			GameObject edibleObject = _currentEdibles[i];
-			if(edibleObject.tag != "GrabbedObject")
+			if(edibleObject.layer != _grabbedLayer)
 			{
 				IEdible edible = edibleObject.GetComponent<IEdible>();
 				edible.OnEat(this);
