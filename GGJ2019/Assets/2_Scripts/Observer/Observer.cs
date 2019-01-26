@@ -24,12 +24,13 @@ public class Observer : NetworkBehaviour
 		//	//_targetLastLookedAtTimeStamps.Add(Time.timeSinceLevelLoad);
 		//}
 
-		_slotter = PlayerSlotter.Singleton();
-
 		_originRotation = transform.forward;
 
 		if (isServer)
+		{
+			_slotter = PlayerSlotter.Singleton();
 			StartCoroutine(LookBehaviour());
+		}
 	}
 
 	[Server]
