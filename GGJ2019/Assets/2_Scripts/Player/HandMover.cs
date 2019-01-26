@@ -17,40 +17,27 @@ public class HandMover : MonoBehaviour
 	[SerializeField] float _dampTime = 0.5f;
 
 	[Space]
-	Vector3 _minMoveBoundaries;
-	Vector3 _maxMoveBoundaries;
-
-	[Space]
 	[Header("Rotation")]
 	Vector3 _rotation;
 
 	[SerializeField] float _rotationSpeed;
-	[SerializeField] Vector2 _minRotationBoundaries;
-	[SerializeField] Vector2 _maxRotationBoundaries;
+	[SerializeField] Vector2 _xRotBounds;
+	[SerializeField] Vector2 _yRotBounds;
+
+	float _rotX = 0.0f;
+	float _rotY = 0.0f;
 
 	void Start()
 	{
 		Rigidbody = GetComponent<Rigidbody>();
 
-		SetMoveBoundaries();
+		//SetMoveBoundaries();
 	}
 
 	void Update()
     {
 		Move();
 		Rotate();
-	}
-
-	void SetMoveBoundaries()
-	{
-		_minMoveBoundaries.x = _tableZone.bounds.min.x;
-		_maxMoveBoundaries.x = _tableZone.bounds.max.x;
-
-		_minMoveBoundaries.y = _tableZone.bounds.min.y;
-		_maxMoveBoundaries.y = _tableZone.bounds.max.y;
-
-		_minMoveBoundaries.z = _tableZone.bounds.min.z;
-		_maxMoveBoundaries.z = _tableZone.bounds.max.z;
 	}
 
 	void Move()
@@ -79,26 +66,31 @@ public class HandMover : MonoBehaviour
 
 		Rigidbody.velocity = Vector3.SmoothDamp(Rigidbody.velocity, _velocity, ref _smoothVelocity, _dampTime);
 
-		MovementBoundaries();
-	}
-
-	void MovementBoundaries()
-	{
-		transform.localPosition = new Vector3(
-			Mathf.Clamp(transform.position.x,
-			_minMoveBoundaries.x,
-			_maxMoveBoundaries.x),
-			Mathf.Clamp(transform.position.y,
-			_minMoveBoundaries.y,
-			_maxMoveBoundaries.y),
-			Mathf.Clamp(transform.position.z,
-			_minMoveBoundaries.z,
-			_maxMoveBoundaries.z)
-			);
+		//MovementBoundaries();
+		LimitArea();
 	}
 
 	void Rotate()
 	{
+
+		float moveY = Input.GetAxis("DPadHorizontal");
+		float moveX = Input.GetAxis("DPadVertical");
+
+		_rotX += -moveX;
+		_rotY += -moveY;
+
+		_rotX = Mathf.Clamp(_rotX, _xRotBounds.x, _xRotBounds.y);
+		_rotY = Mathf.Clamp(_rotY, _yRotBounds.x, _yRotBounds.y);
+
+		Vector3 euler = new Vector3(_rotX, _rotY, 0.0f);
+
+		transform.localEulerAngles = euler;
+
+		//transform.localEulerAngles += direction * Time.deltaTime * _rotationSpeed;
+
+		//transform.rotation *= Quaternion.Euler(direction * Time.deltaTime * _rotationSpeed);
+
+		/*
 		// also get the y rotation from the head
 		_rotation = new Vector3(
 			transform.localEulerAngles.x,
@@ -107,17 +99,19 @@ public class HandMover : MonoBehaviour
 
 		float deltaSpeed = _rotationSpeed * Time.deltaTime;
 
-		float horizontalInput = Input.GetAxis("DPadHorizontal");
+		float moveX = Input.GetAxis("DPadHorizontal");
 		_rotation.z += deltaSpeed * horizontalInput;
 
-		float verticalInput = Input.GetAxis("DPadVertical");
+		float moveY = Input.GetAxis("DPadVertical");
 		_rotation.x -= deltaSpeed * verticalInput;
 
 		//RotationBoundaries();
 
 		transform.localEulerAngles = _rotation;
+		*/
 	}
 
+	/*
 	void RotationBoundaries()
 	{
 		_rotation = new Vector3(
@@ -130,6 +124,13 @@ public class HandMover : MonoBehaviour
 			_maxRotationBoundaries.y)
 			);
 	}
+	*/
+
+	void LimitArea()
+	{
+		transform.position = _tableZone.ClosestPointOnBounds(transform.position);
+	}
+
 	/*
 		void MoveOld()
 		{
