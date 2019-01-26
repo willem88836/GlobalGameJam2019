@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using cakeslice;
 
 public class HandGrabber : MonoBehaviour
 {
 	HandMover _handMover;
 
 	bool _isGrabbing;
+	GrabObject _nearestObject;
 	GrabObject _grabbedObject;
 
 	List<GrabObject> _grabables = new List<GrabObject>();
-	List<int> _ignoredObjects = new List<int>();
 
 	[SerializeField] Animator _animator;
 	float _currentTimeframe;
@@ -31,6 +32,8 @@ public class HandGrabber : MonoBehaviour
 		}
 		else
 		{
+			GetClosestObject();
+
 			if (Input.GetAxisRaw("RightTrigger") < 0)
 				Grab();
 		}
@@ -50,39 +53,48 @@ public class HandGrabber : MonoBehaviour
 			StartAnimateOpen(1);
 			return;
 		}
-			
-		
-		_grabbedObject = _grabables[0];
 
-		if (_grabables.Count > 1)
-			GetClosestObject();
+		_grabbedObject = _nearestObject;
+		_nearestObject.GetComponent<Outline>().color = 0;
 
 		_grabbedObject.Grab();
 
-		StartAnimateOpen(0.17f);
+		StartAnimateOpen(0.17f); // eventually base this number on a value in GrabObject
 	}
 
 	void GetClosestObject()
 	{
+		if (_grabables.Count == 0)
+		{
+			if (_nearestObject != null)
+			{
+				_nearestObject.GetComponent<Outline>().color = 0;
+				_nearestObject = null;
+			}
+			return;
+		}
+
+		_nearestObject = _grabables[0];
+
 		for (int i = 0; i < _grabables.Count; i++)
 		{
-			if (_ignoredObjects.Contains(_grabables[i].GetInstanceID()))
-				continue;
-
-			float closestDistance = Vector3.Distance(transform.position, _grabbedObject.transform.position);
+			float closestDistance = Vector3.Distance(transform.position, _nearestObject.transform.position);
 			float thisDistance = Vector3.Distance(transform.position, _grabables[i].transform.position);
 
 			if (thisDistance < closestDistance)
 			{
-				_grabbedObject = _grabables[i];
+				_nearestObject.GetComponent<Outline>().color = 0;
+				_nearestObject = _grabables[i];
 			}
 		}
+
+		_nearestObject.GetComponent<Outline>().color = 2;
 	}
 
 	/// <summary>
 	///		Release the grabbed object
 	/// </summary>
-	public void ReleaseGrab()
+	void ReleaseGrab()
 	{
 		_isGrabbing = false;
 		StartAnimateClose();
@@ -91,12 +103,6 @@ public class HandGrabber : MonoBehaviour
 
 		_grabbedObject.Release(_handMover.Rigidbody.velocity);
 		_grabbedObject = null;
-	}
-
-	public void ForceRelease()
-	{
-		_ignoredObjects.Add(_grabbedObject.GetInstanceID());
-		ReleaseGrab();
 	}
 
 	/// <summary>
@@ -138,23 +144,13 @@ public class HandGrabber : MonoBehaviour
 
 	void OnTriggerEnter(Collider other)
 	{
-		GrabObject obj = other.GetComponent<GrabObject>();
-		if (obj != null && !_grabables.Contains(obj))
-			_grabables.Add(obj);
+		if (other.GetComponent<GrabObject>())
+			_grabables.Add(other.GetComponent<GrabObject>());;
 	}
 
 	private void OnTriggerExit(Collider other)
 	{
-		GrabObject obj = other.GetComponent<GrabObject>();
-		if (obj != null && _grabables.Contains(obj))
-		{
-			_grabables.Remove(obj);
-
-			int id = obj.GetInstanceID();
-			if (_ignoredObjects.Contains(id))
-			{
-				_ignoredObjects.Remove(id);
-			}
-		}
+		if (other.GetComponent<GrabObject>())
+			_grabables.Remove(other.GetComponent<GrabObject>());
 	}
 }
