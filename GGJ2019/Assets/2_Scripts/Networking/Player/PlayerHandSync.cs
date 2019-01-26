@@ -43,11 +43,6 @@ public class PlayerHandSync : NetworkBehaviour
 	{
 		_sendInterval = GetNetworkSendInterval();
 
-		if (isServer)
-		{
-			SetLocalMovement();
-			SetLocalRotate();
-		}
 	}
 
 	[Server]
@@ -438,6 +433,40 @@ public class PlayerHandSync : NetworkBehaviour
 		average /= _rotateDelta.Count;
 
 		return average;
+	}
+
+	[Server]
+	public void ForceSync(Transform point)
+	{
+		_lastMoveUpdate = Time.time;
+		_lastRotateUpdate = Time.time;
+
+		if (_syncMovement != null)
+			StopCoroutine(_syncMovement);
+
+		if (_syncRotate != null)
+			StopCoroutine(_syncRotate);
+
+		_transform.position = point.position;
+		_transform.rotation = point.rotation;
+
+		RpcForceSync(point.position, point.rotation);
+	}
+
+	[ClientRpc]
+	void RpcForceSync(Vector3 position, Quaternion rotation)
+	{
+		_lastMoveUpdate = Time.time;
+		_lastRotateUpdate = Time.time;
+
+		if (_syncMovement != null)
+			StopCoroutine(_syncMovement);
+
+		if (_syncRotate != null)
+			StopCoroutine(_syncRotate);
+
+		_transform.position = position;
+		_transform.rotation = rotation;
 	}
 
 	/*

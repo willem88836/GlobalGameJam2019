@@ -32,9 +32,6 @@ public class PlayerHeadSync : NetworkBehaviour
 	void Start()
 	{
 		_sendInterval = GetNetworkSendInterval();
-
-		if (isServer)
-			SetLocalRotate();
 	}
 
 	[Server]
@@ -201,6 +198,32 @@ public class PlayerHeadSync : NetworkBehaviour
 
 		_transform.rotation = rotation;
 		_smoothRotate = null;
+	}
+
+	[Server]
+	public void ForceSync(Transform point)
+	{
+		_lastRotateUpdate = Time.time;
+
+		if (_syncRotate != null)
+			StopCoroutine(_syncRotate);
+
+		_transform.position = point.position;
+		_transform.rotation = point.rotation;
+
+		RpcForceSync(point.position, point.rotation);
+	}
+
+	[ClientRpc]
+	void RpcForceSync(Vector3 position, Quaternion rotation)
+	{
+		_lastRotateUpdate = Time.time;
+
+		if (_syncRotate != null)
+			StopCoroutine(_syncRotate);
+
+		_transform.position = position;
+		_transform.rotation = rotation;
 	}
 
 	// ACCESS

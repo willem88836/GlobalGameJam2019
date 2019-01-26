@@ -32,7 +32,7 @@ public class TmpPlayerMovement : MonoBehaviour
 
 		ApplyVelocity();
 
-		transform.forward = Random.insideUnitSphere;
+		//transform.forward = Random.insideUnitSphere;
     }
 
 	void ApplyVelocity()
