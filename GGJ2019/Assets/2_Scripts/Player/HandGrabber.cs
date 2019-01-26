@@ -12,7 +12,6 @@ public class HandGrabber : MonoBehaviour
 
 	[SerializeField] Animator _animator;
 	float _currentTimeframe;
-	float _startTimeframe;
 	float _targetTimeFrame = 0;
 	float _animateSpeed = 0;
 	float _lerpValue = 0;
@@ -109,7 +108,6 @@ public class HandGrabber : MonoBehaviour
 	{
 		_targetTimeFrame = 0;
 		_animateSpeed = -2;
-		Debug.Log("cheesee");
 	}
 
 	void Animate()
@@ -118,7 +116,7 @@ public class HandGrabber : MonoBehaviour
 		{
 			_lerpValue += _animateSpeed * Time.deltaTime;
 			_currentTimeframe = Mathf.Lerp(_currentTimeframe, _targetTimeFrame, _lerpValue);
-			Debug.Log(_lerpValue);
+
 			_animator.Play("Open", 0, _currentTimeframe);
 
 			_lerpValue = Mathf.Clamp(_lerpValue, 0, 1);
