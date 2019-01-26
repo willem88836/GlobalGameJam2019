@@ -61,6 +61,9 @@ public class HandGrabber : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	///		Release the grabbed object
+	/// </summary>
 	void ReleaseGrab()
 	{
 		_isGrabbing = false;
@@ -71,9 +74,13 @@ public class HandGrabber : MonoBehaviour
 		_grabbedObject = null;
 	}
 
+	/// <summary>
+	///		Hold the object in place, in the hand
+	/// </summary>
 	void HoldObject()
 	{
 		_grabbedObject.transform.position = transform.position;
+		_grabbedObject.transform.rotation = transform.rotation;
 	}
 
 	void OnTriggerEnter(Collider other)
