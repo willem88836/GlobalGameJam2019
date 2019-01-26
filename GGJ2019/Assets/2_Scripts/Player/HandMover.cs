@@ -5,6 +5,8 @@ public class HandMover : MonoBehaviour
 {
 	[HideInInspector] public Rigidbody Rigidbody;
 
+	[SerializeField] Transform _head;
+
 	[SerializeField] float _speed;
 
 	void Start()
@@ -23,11 +25,11 @@ public class HandMover : MonoBehaviour
 
 		// Move forward and backward
 		float forwardInput = Input.GetAxis("Horizontal1");
-		Rigidbody.AddForce(Vector3.right * forwardInput * deltaSpeed);
+		Rigidbody.AddForce(_head.right * forwardInput * deltaSpeed);
 		
 		// Move left and right
 		float sidewaysInput = Input.GetAxis("Horizontal2");
-		Rigidbody.AddForce(Vector3.forward * sidewaysInput * deltaSpeed);
+		Rigidbody.AddForce(_head.forward * sidewaysInput * deltaSpeed);
 
 		// Move up 
 		if (Input.GetAxisRaw("LeftTrigger") < 0)

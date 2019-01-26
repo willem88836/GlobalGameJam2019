@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb60c02d8e9e75a49aec2aea8d8b37fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 40
+  _speed: 100
 --- !u!1 &472093901
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,6 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 0}
+  _head: {fileID: 90806033}
   _speed: 1000
 --- !u!135 &888271885
 SphereCollider:
