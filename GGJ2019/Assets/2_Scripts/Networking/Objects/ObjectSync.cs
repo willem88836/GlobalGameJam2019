@@ -8,6 +8,7 @@ public class ObjectSync : NetworkBehaviour
 {
 	[SerializeField] Transform _transform;
 	[SerializeField] Rigidbody _rigid;
+	[SerializeField] Collider[] _colliders;
 
 	Coroutine _syncMovement = null;
 	Coroutine _syncRotate = null;
@@ -31,7 +32,7 @@ public class ObjectSync : NetworkBehaviour
 	void Awake()
 	{
 		// Default set kinematic
-		_rigid.isKinematic = true;
+		//_rigid.isKinematic = true;
 	}
 
 	void Start()
@@ -41,35 +42,10 @@ public class ObjectSync : NetworkBehaviour
 		_sendInterval = GetNetworkSendInterval();
 
 		if (isServer)
+		{
+			SetServerMovement();
 			PlayerList.Singleton().OnPlayerJoined += delegate { ForceSync(_transform); };
-
-	}
-
-	[Server]
-	public void SetLocalMovement()
-	{
-		Debug.Log("Setting local movement");
-
-		DisableMovementSync();
-		RpcSetLocalMovement();
-
-		_rigid.isKinematic = true;
-	}
-
-	[ClientRpc]
-	void RpcSetLocalMovement()
-	{
-		if (!isLocalPlayer)
-			return;
-
-		Debug.Log("Setting local movement");
-
-		DisableMovementSync();
-
-		_lastMoveUpdate = Time.time;
-
-		_rigid.isKinematic = false;
-		_syncMovement = StartCoroutine(SyncClientMovement());
+		}
 	}
 
 	[Server]
@@ -81,38 +57,32 @@ public class ObjectSync : NetworkBehaviour
 		_lastMoveUpdate = Time.time;
 
 		_rigid.isKinematic = false;
+		
+		for (int i = 0; i < _colliders.Length; i++)
+		{
+			Collider current = _colliders[i];
+
+			current.enabled = true;
+		}
+
+		_transform.GetComponent<Collider>().enabled = true;
+
 		_syncMovement = StartCoroutine(SyncServerMovement());
 	}
 
 	[ClientRpc]
 	void RpcSetServerMovement()
 	{
-		if (!isLocalPlayer)
-			return;
-
 		DisableMovementSync();
 
 		_rigid.isKinematic = true;
-	}
 
-	[Server]
-	public void SetLocalRotate()
-	{
-		DisableRotateSync();
-		RpcSetLocalRotate();
-	}
+		for (int i = 0; i < _colliders.Length; i++)
+		{
+			Collider current = _colliders[i];
 
-	[ClientRpc]
-	void RpcSetLocalRotate()
-	{
-		if (!isLocalPlayer)
-			return;
-
-		DisableRotateSync();
-
-		_lastRotateUpdate = Time.time;
-
-		_syncRotate = StartCoroutine(SyncClientRotate());
+			current.enabled = false;
+		}
 	}
 
 	[Server]
@@ -166,16 +136,6 @@ public class ObjectSync : NetworkBehaviour
 	}
 
 	// SYNC MOVEMENT MODULES
-	[Client]
-	IEnumerator SyncClientMovement()
-	{
-		for (; ; )
-		{
-			CmdMovementUpdate(_rigid.position, _rigid.velocity);
-
-			yield return new WaitForSeconds(_sendInterval);
-		}
-	}
 
 	[Server]
 	IEnumerator SyncServerMovement()
@@ -190,17 +150,6 @@ public class ObjectSync : NetworkBehaviour
 
 	// SYNC ROTATE MODULES
 
-	[Client]
-	IEnumerator SyncClientRotate()
-	{
-		for (; ; )
-		{
-			CmdRotateUpdate(_rigid.rotation, _rigid.angularVelocity);
-
-			yield return new WaitForSeconds(_sendInterval);
-		}
-	}
-
 	[Server]
 	IEnumerator SyncServerRotate()
 	{
@@ -213,23 +162,6 @@ public class ObjectSync : NetworkBehaviour
 	}
 
 	// MOVEMENT SYNC
-
-	[Command]
-	void CmdMovementUpdate(Vector3 position, Vector3 velocity)
-	{
-		AddMovementDelta();
-		float avgDelta = GetMovementDelta();
-
-		_lastVelocity = velocity;
-
-		Vector3 predictedPosition = position + (velocity * GetPlayerLatency());
-
-		RpcRemoteMovementUpdate(predictedPosition, velocity);
-
-		if (_smoothMovement != null)
-			StopCoroutine(_smoothMovement);
-		_smoothMovement = StartCoroutine(SmoothMove(predictedPosition, avgDelta));
-	}
 
 	[ClientRpc]
 	void RpcRemoteMovementUpdate(Vector3 position, Vector3 velocity)
@@ -262,26 +194,6 @@ public class ObjectSync : NetworkBehaviour
 	}
 
 	// ROTATE SYNC
-
-	[Command]
-	void CmdRotateUpdate(Quaternion rotation, Vector3 angularVelocity)
-	{
-		AddRotateDelta();
-		float avgDelta = GetRotateDelta();
-
-		// Calculate world angularVelocity vector to euler rotation in local axis
-		Vector3 eulerVelocity = angularVelocity * Mathf.Rad2Deg;
-		float eulerLength = eulerVelocity.magnitude;
-		Vector3 localVelocity = new Vector3(0.0f, eulerLength, 0.0f);
-
-		Quaternion predictedRotation = rotation * Quaternion.Euler(localVelocity * GetPlayerLatency());
-
-		RpcRemoteRotateUpdate(predictedRotation, angularVelocity);
-
-		if (_smoothRotate != null)
-			StopCoroutine(_smoothRotate);
-		_smoothRotate = StartCoroutine(SmoothRotate(predictedRotation, avgDelta));
-	}
 
 	[ClientRpc]
 	void RpcRemoteRotateUpdate(Quaternion rotation, Vector3 angularVelocity)
@@ -328,6 +240,7 @@ public class ObjectSync : NetworkBehaviour
 	IEnumerator SmoothMove(Vector3 position, float duration)
 	{
 		Vector3 oldPosition = _rigid.position;
+		//_rigid.velocity = Vector3.zero;
 
 		float timer = 0.0f;
 
@@ -468,6 +381,9 @@ public class ObjectSync : NetworkBehaviour
 
 	float GetLocalLatency()
 	{
-		return _playerList.GetLocalLatency();
+		if (_playerList != null)
+			return _playerList.GetLocalLatency();
+
+		return 0;
 	}
 }

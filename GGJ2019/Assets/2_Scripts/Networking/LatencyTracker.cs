@@ -36,6 +36,9 @@ public class LatencyTracker : NetworkBehaviour
 	[ClientRpc(channel = 1)]
 	void RpcPingPlayers(int hostId, int serverStamp)
 	{
+		if (_playerList == null)
+			return;
+
 		NetworkPlayer localPlayer = _playerList.GetLocalPlayer();
 
 		if (localPlayer == null)
