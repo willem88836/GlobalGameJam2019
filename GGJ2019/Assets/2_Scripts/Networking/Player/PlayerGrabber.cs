@@ -11,6 +11,12 @@ public class PlayerGrabber : NetworkBehaviour
 
 	IGrabable _grabbedObject;
 
+	[SerializeField] Animator _animator;
+	float _currentTimeframe;
+	float _targetTimeFrame = 0;
+	float _animateSpeed = 0;
+	float _lerpValue = 0;
+
 	bool _triggerPressed = false;
 
 	void Update()
@@ -19,6 +25,8 @@ public class PlayerGrabber : NetworkBehaviour
 			ServerUpdate();
 		else
 			ClientUpdate();
+
+		Animate();
 	}
 
 	void ServerUpdate()
@@ -38,11 +46,15 @@ public class PlayerGrabber : NetworkBehaviour
 		if (Input.GetAxisRaw("RightTrigger") < 0 && !_triggerPressed)
 		{
 			_triggerPressed = true;
+			CmdAnimateOpen();
+			//_handAnimator.SetFloat("Blend", 1.0f);
 			CmdAttemptGrab();
 		}
 		else if (Input.GetAxisRaw("RightTrigger") >= 0 && _triggerPressed)
 		{
 			_triggerPressed = false;
+			CmdAnimateClose();
+			//_handAnimator.SetFloat("Blend", 0.0f);
 			CmdAttemptRelease();
 		}
 	}
@@ -116,5 +128,58 @@ public class PlayerGrabber : NetworkBehaviour
 
 		_grabbedObject.OnRelease(_handSync.GetLastVelocity());
 		_grabbedObject = null;
+	}
+
+	[Command]
+	void CmdAnimateOpen()
+	{
+		StartAnimateOpen();
+		RpcAnimateOpen();
+	}
+
+	[ClientRpc]
+	void RpcAnimateOpen()
+	{
+		StartAnimateOpen();
+	}
+
+	[Command]
+	void CmdAnimateClose()
+	{
+		StartAnimateClose();
+		RpcAnimateClose();
+	}
+
+	[ClientRpc]
+	void RpcAnimateClose()
+	{
+		StartAnimateClose();
+	}
+
+	void StartAnimateOpen()
+	{
+		_targetTimeFrame = 1;
+		_animateSpeed = 2;
+	}
+
+	void StartAnimateClose()
+	{
+		_targetTimeFrame = 0;
+		_animateSpeed = -2;
+	}
+
+	void Animate()
+	{
+		if (_animateSpeed != 0)
+		{
+			_lerpValue += _animateSpeed * Time.deltaTime;
+			_currentTimeframe = Mathf.Lerp(_currentTimeframe, _targetTimeFrame, _lerpValue);
+
+			_animator.Play("Open", 0, _currentTimeframe);
+
+			_lerpValue = Mathf.Clamp(_lerpValue, 0, 1);
+			if (_lerpValue == 0 || _lerpValue == 1)
+				_animateSpeed = 0;
+		}
 	}
 }
