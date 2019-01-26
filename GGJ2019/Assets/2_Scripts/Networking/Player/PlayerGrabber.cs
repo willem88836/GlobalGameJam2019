@@ -62,7 +62,7 @@ public class PlayerGrabber : NetworkBehaviour
 			return;
 
 		_grabbedObject = grab;
-		_grabbedObject.OnGrab(_grabPoint);
+		_grabbedObject.OnGrab(_grabPoint, this);
 
 		RpcGrabLocalObject(grab.GetNetId());
 	}
@@ -82,6 +82,18 @@ public class PlayerGrabber : NetworkBehaviour
 			return;
 
 		_grabbedObject = grab;
+	}
+
+	[Server]
+	public void ForceRelease()
+	{
+		if (_grabbedObject == null)
+			return;
+
+		RpcReleaseLocalObject();
+
+		_grabbedObject.OnRelease(_handSync.GetLastVelocity());
+		_grabbedObject = null;
 	}
 
 	[Command]

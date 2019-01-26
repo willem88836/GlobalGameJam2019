@@ -128,7 +128,16 @@ public class HandMover : MonoBehaviour
 
 	void LimitArea()
 	{
-		transform.position = _tableZone.ClosestPointOnBounds(transform.position);
+		Vector3 freePos = transform.position;
+		Vector3 limitPos = _tableZone.ClosestPointOnBounds(transform.position);
+
+		if (freePos != limitPos)
+		{
+			transform.position = limitPos;
+			Rigidbody.velocity = Vector3.zero;
+		}
+
+	
 	}
 
 	/*

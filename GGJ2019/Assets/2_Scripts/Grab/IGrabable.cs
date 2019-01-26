@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 public interface IGrabable
 {
-	void OnGrab(Transform point);
+	void OnGrab(Transform point, PlayerGrabber grabber);
 
 	void OnCarry(Transform point);
 

@@ -61,7 +61,7 @@ public class Observer : NetworkBehaviour
 	[Server]
 	void CheckSegments()
 	{
-		Debug.Log("Checking Segments");
+		//Debug.Log("Checking Segments");
 
 		for (int i = 0; i < _tableSegments.Length; i++)
 		{

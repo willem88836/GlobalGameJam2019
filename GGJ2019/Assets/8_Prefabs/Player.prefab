@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7784052756735253912}
-  - component: {fileID: 3892550250317673962}
+  - component: {fileID: 1036375862586031920}
   - component: {fileID: 4419141568268306468}
   - component: {fileID: 6672955343160931979}
   m_Layer: 0
@@ -35,18 +35,18 @@ Transform:
   m_Father: {fileID: 3479997139234789152}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3892550250317673962
-BoxCollider:
+--- !u!135 &1036375862586031920
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250978771505239544}
-  m_Material: {fileID: 13400000, guid: 3516a41fae4af7f4286ece99061a65e6, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 4, z: 3}
+  m_Radius: 2.4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4419141568268306468
 Rigidbody:
@@ -77,8 +77,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 100
-  _minBoundaries: {x: -45, y: -75}
-  _maxBoundaries: {x: 45, y: 75}
+  _minBoundaries: {x: -60, y: -90}
+  _maxBoundaries: {x: 45, y: 90}
 --- !u!1 &1249885020978904084
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,7 +777,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 2
+  near clip plane: 2.4
   far clip plane: 1000
   field of view: 60
   orthographic: 0
