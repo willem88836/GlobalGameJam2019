@@ -99,7 +99,7 @@ public class HandMover : MonoBehaviour
 		float verticalInput = Input.GetAxis("DPadVertical");
 		_rotation.x -= deltaSpeed * verticalInput;
 
-		//RotationBoundaries();
+		RotationBoundaries();
 
 		transform.localEulerAngles = _rotation;
 	}
@@ -116,64 +116,4 @@ public class HandMover : MonoBehaviour
 			_maxRotationBoundaries.y)
 			);
 	}
-	/*
-		void MoveOld()
-		{
-		float deltaSpeed = _speed * Time.deltaTime;
-
-			// Move forward and backward
-			float forwardInput = Input.GetAxis("Horizontal1");
-			Rigidbody.AddForce(_head.right * forwardInput * deltaSpeed);
-
-			// Move left and right
-			float sidewaysInput = Input.GetAxis("Horizontal2");
-			Rigidbody.AddForce(_head.forward * sidewaysInput * deltaSpeed);
-
-			// Move up 
-			if (Input.GetAxisRaw("LeftTrigger") < 0)
-				Rigidbody.AddForce(Vector3.up * deltaSpeed);
-			else if (Input.GetKey(KeyCode.Joystick1Button4))
-				Rigidbody.AddForce(Vector3.down * deltaSpeed);
-
-				// TODO set a max velocity here if needed
-		}*/
-
-	/*
-	
-	float deltaSpeed = _speed * Time.deltaTime;
-		float deltaBreakSpeed = _breakSpeed + Time.deltaTime;
-
-		// Move forward and backward
-		float xInput = Input.GetAxis("Horizontal1");
-		if (xInput != 0)
-		{
-			_velocity.x += deltaSpeed * xInput;
-		}
-		else if (_velocity.x != 0)
-		{
-			_velocity.x /= deltaBreakSpeed;
-		}
-
-		// Move left and right
-		float zInput = Input.GetAxis("Horizontal2");
-		if (zInput != 0)
-		{
-			_velocity.z += deltaSpeed * zInput;
-		}
-		else if (_velocity.z != 0)
-		{
-			_velocity.z /= deltaBreakSpeed;
-		}
-
-		// Move up 
-		if (Input.GetAxisRaw("LeftTrigger") < 0)
-			_velocity.y += deltaSpeed;
-		else if (Input.GetKey(KeyCode.Joystick1Button4))
-			_velocity.y -= deltaSpeed;
-		else if (_velocity.y != 0)
-		{
-			_velocity.y /= deltaBreakSpeed;
-		}
-
-	  */
 }

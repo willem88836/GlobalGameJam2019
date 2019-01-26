@@ -10,6 +10,8 @@ public class HandGrabber : MonoBehaviour
 
 	List<GrabObject> _grabables = new List<GrabObject>();
 
+	[SerializeField] Animator _animator;
+	
 	void Start()
 	{
 		_handMover = transform.parent.GetComponent<HandMover>();
@@ -37,7 +39,11 @@ public class HandGrabber : MonoBehaviour
 		_isGrabbing = true;
 
 		if (_grabables.Count == 0)
+		{
+			Animate(23);
 			return;
+		}
+			
 		
 		_grabbedObject = _grabables[0];
 
@@ -45,6 +51,8 @@ public class HandGrabber : MonoBehaviour
 			GetClosestObject();
 
 		_grabbedObject.Grab();
+
+		Animate(4);
 	}
 
 	void GetClosestObject()
@@ -67,6 +75,7 @@ public class HandGrabber : MonoBehaviour
 	void ReleaseGrab()
 	{
 		_isGrabbing = false;
+		Animate(0);
 		if (_grabbedObject == null)
 			return;
 
@@ -81,6 +90,11 @@ public class HandGrabber : MonoBehaviour
 	{
 		_grabbedObject.transform.position = transform.position;
 		_grabbedObject.transform.rotation = transform.rotation;
+	}
+
+	void Animate(float timeFrame)
+	{
+		_animator.Play("Open", 0, timeFrame);
 	}
 
 	void OnTriggerEnter(Collider other)
