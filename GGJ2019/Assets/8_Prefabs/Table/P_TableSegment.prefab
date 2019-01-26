@@ -136,7 +136,7 @@ GameObject:
   m_Layer: 0
   m_Name: Spawnpoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5938655980376293919, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -166,8 +166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d761e6904fa10468f1075445c96939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnRadius: 1.5
-  _randomRotation: 1
+  _spawnRadius: 0.6
+  _randomRotation: 0
 --- !u!1001 &349428882913470577
 PrefabInstance:
   m_ObjectHideFlags: 0

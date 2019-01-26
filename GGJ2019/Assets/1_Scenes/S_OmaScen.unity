@@ -556,9 +556,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc1639642ca8454986007e466142e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _newObjectivesInterval: 30
+  _newObjectivesInterval: 5
   _ediblesRange:
-    X: 3
+    X: 4
     Y: 6
   _objectiveRange:
     X: 2

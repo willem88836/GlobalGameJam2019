@@ -31,9 +31,9 @@ public class TableSegment : MonoBehaviour
 		float totalDisgusting = 0;
 		foreach(IDisgusting disgusting in _disgustingObjects)
 		{
-			totalDisgusting += disgusting.GetDistgustingValue();
+			if (!disgusting.IsOnPlate)
+				totalDisgusting += disgusting.GetDistgustingValue();
 		}
 		return totalDisgusting;
 	}
-
-}
+}	
