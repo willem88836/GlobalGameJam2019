@@ -35,15 +35,22 @@ public class HandMover : MonoBehaviour
 			moveY = 1;
 		else if (Input.GetKey(KeyCode.Joystick1Button4))
 			moveY = -1;
-		else
-			moveY = 0;
+		
+		// makes sure to aim the hand based on head-rotation
+		Quaternion _relativeRotation = new Quaternion(
+			0,
+			_head.rotation.y,
+			0,
+			_head.rotation.w
+			);
 
-		Vector3 direction = new Vector3(moveX, moveY, moveZ);
+		Vector3 direction = _relativeRotation * new Vector3(moveX, moveY, moveZ);
 
 		_velocity = direction * _speed;
 
 		Rigidbody.velocity = Vector3.SmoothDamp(Rigidbody.velocity, _velocity, ref _smoothVelocity, _dampTime);
 	}
+
 	/*
 		void MoveOld()
 		{
