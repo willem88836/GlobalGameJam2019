@@ -499,6 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99dd5294ba1570347ae64b58960ed0b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Rigidbody: {fileID: 0}
   _speed: 400
 --- !u!135 &888271885
 SphereCollider:
@@ -928,3 +929,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff6a11aa6623b44d824bb4b1cdcceeb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _handMover: {fileID: 888271884}

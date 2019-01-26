@@ -22,9 +22,10 @@ public class GrabObject : MonoBehaviour
 		_rigidbody.useGravity = false;
 	}
 
-	public void Release()
+	public void Release(Vector3 velocity)
 	{
 		gameObject.layer = 0;
 		_rigidbody.useGravity = true;
+		_rigidbody.velocity = velocity;
 	}
 }
