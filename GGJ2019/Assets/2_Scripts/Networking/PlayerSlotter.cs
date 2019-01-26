@@ -76,6 +76,12 @@ public class PlayerSlotter : NetworkBehaviour
 	}
 
 	[Server]
+	public NetworkPlayer GetPlayer(PlayerSlot slot)
+	{
+		return _playerDictionary[slot];
+	}
+
+	[Server]
 	public static PlayerSlotter Singleton()
 	{
 		return _instance;

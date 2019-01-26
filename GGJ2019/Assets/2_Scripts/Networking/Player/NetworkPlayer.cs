@@ -50,6 +50,22 @@ public class NetworkPlayer : NetworkBehaviour
 		transform.rotation = rot;
 	}
 
+	[Server]
+	public void PunishPlayer()
+	{
+		// TODO: Punishment
+		RpcPunishment();
+	}
+
+	[ClientRpc]
+	void RpcPunishment()
+	{
+		if (!isLocalPlayer)
+			return;
+
+		Debug.Log(">> Granda is angry at you! <<");
+	}
+
 
 	[Client]
 	public void PingPlayer(int hostId, int serverStamp)

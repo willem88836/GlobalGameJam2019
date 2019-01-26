@@ -5,6 +5,12 @@ public class TableSegment : MonoBehaviour
 {
 	private List<IDisgusting> _disgustingObjects = new List<IDisgusting>();
 
+	PlayerSlot _slot;
+
+	private void Awake()
+	{
+		_slot = GetComponent<PlayerSlot>();
+	}
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -35,4 +41,8 @@ public class TableSegment : MonoBehaviour
 		return totalDisgusting;
 	}
 
+	public PlayerSlot GetSlot()
+	{
+		return _slot;
+	}
 }
