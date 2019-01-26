@@ -476,6 +476,9 @@ public class PlayerHandSync : NetworkBehaviour
 
 	float GetLocalLatency()
 	{
-		return _playerList.GetLocalLatency();
+		if (_playerList != null)
+			return _playerList.GetLocalLatency();
+
+		return 0;
 	}
 }

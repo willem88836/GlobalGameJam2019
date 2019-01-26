@@ -30,12 +30,24 @@ public class NetworkPlayer : NetworkBehaviour
 	[Server]
 	public void PreparePlayer(PlayerSlot slot)
 	{
+		transform.position = slot.transform.position;
+		transform.forward = slot.transform.forward;
+
+		RpcPositionPlayer(slot.transform.position, slot.transform.rotation);
+
 		_handSync.ForceSync(slot.HandStartPoint);
 		//_handSync.SetLocalMovement();
 		//_handSync.SetLocalRotate();
 
 		_headSync.ForceSync(slot.HeadStartPoint);
 		//_headSync.SetLocalRotate();
+	}
+
+	[ClientRpc]
+	void RpcPositionPlayer(Vector3 pos, Quaternion rot)
+	{
+		transform.position = pos;
+		transform.rotation = rot;
 	}
 
 
