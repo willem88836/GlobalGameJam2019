@@ -64,7 +64,7 @@ public class ObjectiveManager : MonoBehaviour
 		int objectiveCount = Random.Range(_objectiveRange.X, _objectiveRange.Y);
 		int ediblesCount = Random.Range(_ediblesRange.X, _ediblesRange.Y) - objectiveCount;
 
-		GameObject EdibleObjectivePrefab = _objectives[Random.Range(0, _edibles.Length)];
+		GameObject EdibleObjectivePrefab = _objectives[Random.Range(0, _objectives.Length)];
 
 		IObjective objectiveObject = EdibleObjectivePrefab.GetComponent<IObjective>();
 		Objective objective = new Objective()

@@ -70,8 +70,8 @@ GameObject:
   - component: {fileID: 1365067720}
   - component: {fileID: 1365067717}
   - component: {fileID: 1365067718}
-  - component: {fileID: 7644738139404252105}
   - component: {fileID: 8774696801705527004}
+  - component: {fileID: 7960643147437189755}
   m_Layer: 0
   m_Name: P_Fork
   m_TagString: Untagged
@@ -101,7 +101,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1365067716}
-  m_Mesh: {fileID: 4300000, guid: 7e58877c5bf3e00498603aebcb7d3059, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 998bfc665646646d8bab41cb9f93f5af, type: 3}
 --- !u!23 &1365067720
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -119,7 +119,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7e58877c5bf3e00498603aebcb7d3059, type: 3}
+  - {fileID: 2100000, guid: 998bfc665646646d8bab41cb9f93f5af, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -168,20 +168,7 @@ MeshCollider:
   serializedVersion: 3
   m_Convex: 1
   m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 7e58877c5bf3e00498603aebcb7d3059, type: 3}
---- !u!114 &7644738139404252105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1365067716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 839e6a3f62dc90749a6beea4e29e0a05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Grabbed: 0
+  m_Mesh: {fileID: 4300000, guid: 998bfc665646646d8bab41cb9f93f5af, type: 3}
 --- !u!114 &8774696801705527004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -198,3 +185,17 @@ MonoBehaviour:
   eraseRenderer: 0
   originalLayer: 0
   originalMaterials: []
+--- !u!114 &7960643147437189755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365067716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e008ff3890beea40a3fe556107f7f94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Grabbed: 0
+  _heightThreshold: -2
