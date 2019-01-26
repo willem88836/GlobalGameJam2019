@@ -7,13 +7,14 @@ public class HandMover : MonoBehaviour
 
 	[SerializeField] Transform _head;
 
-	[SerializeField] float _speed;
+	[SerializeField] float _speedHorizontal;
+	[SerializeField] float _speedVertical;
 	//[SerializeField] float _breakSpeed;
 
 	Vector3 _velocity;
 
 	Vector3 _smoothVelocity = Vector3.zero;
-	float _dampTime = 0.5f;
+	[SerializeField] float _dampTime = 0.5f;
 
 	void Start()
 	{
@@ -44,9 +45,10 @@ public class HandMover : MonoBehaviour
 			_head.rotation.w
 			);
 
-		Vector3 direction = _relativeRotation * new Vector3(moveX, moveY, moveZ);
-
-		_velocity = direction * _speed;
+		_velocity = _relativeRotation * new Vector3(
+			moveX * _speedHorizontal,
+			moveY * _speedVertical,
+			moveZ * _speedHorizontal);
 
 		Rigidbody.velocity = Vector3.SmoothDamp(Rigidbody.velocity, _velocity, ref _smoothVelocity, _dampTime);
 	}
