@@ -6,6 +6,7 @@ public class Grapes : MonoBehaviour, IObjective, IEdible, IDisgusting
 	public int Type { get; set; }
 	public int Player { get; set; }
 	public Action<IObjective> OnComplete { get; set; }
+	public bool IsOnPlate { get;set; }
 
 	[SerializeField] private float _maxVelocity;
 
@@ -14,7 +15,6 @@ public class Grapes : MonoBehaviour, IObjective, IEdible, IDisgusting
 	{
 		_previousPosition = transform.position;
 	}
-
 
 
 	[SerializeField] private float _disgustingValue;

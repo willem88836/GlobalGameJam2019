@@ -9,6 +9,7 @@ public class SimpleDisgustingObject : MonoBehaviour, IDisgusting, IEdible, IObje
 
 	public int Type { get; set; }
 	public int Player { get; set; }
+	public bool IsOnPlate { get; set; }
 
 	public virtual float GetDistgustingValue()
 	{
