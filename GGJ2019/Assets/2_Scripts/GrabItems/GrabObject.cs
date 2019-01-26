@@ -13,8 +13,7 @@ public class GrabObject : MonoBehaviour
 
 	void Start()
 	{
-		_rigidbody = transform.parent.GetComponent<Rigidbody>();
-		Debug.Log(_rigidbody);
+		_rigidbody = GetComponent<Rigidbody>();
 	}
 
 	public virtual void Grab()
