@@ -11,7 +11,12 @@ public class HandGrabber : MonoBehaviour
 	List<GrabObject> _grabables = new List<GrabObject>();
 
 	[SerializeField] Animator _animator;
-	
+	float _currentTimeframe;
+	float _startTimeframe;
+	float _targetTimeFrame = 0;
+	float _animateSpeed = 0;
+	float _lerpValue = 0;
+
 	void Start()
 	{
 		_handMover = transform.parent.GetComponent<HandMover>();
@@ -29,9 +34,11 @@ public class HandGrabber : MonoBehaviour
 			if (Input.GetAxisRaw("RightTrigger") < 0)
 				Grab();
 		}
-		
+
 		if (_grabbedObject != null)
 			HoldObject();
+
+		Animate();
 	}
 
 	void Grab()
@@ -40,7 +47,7 @@ public class HandGrabber : MonoBehaviour
 
 		if (_grabables.Count == 0)
 		{
-			Animate(23);
+			StartAnimateOpen(1);
 			return;
 		}
 			
@@ -52,7 +59,7 @@ public class HandGrabber : MonoBehaviour
 
 		_grabbedObject.Grab();
 
-		Animate(4);
+		StartAnimateOpen(0.17f);
 	}
 
 	void GetClosestObject()
@@ -75,7 +82,7 @@ public class HandGrabber : MonoBehaviour
 	void ReleaseGrab()
 	{
 		_isGrabbing = false;
-		Animate(0);
+		StartAnimateClose();
 		if (_grabbedObject == null)
 			return;
 
@@ -92,9 +99,32 @@ public class HandGrabber : MonoBehaviour
 		_grabbedObject.transform.rotation = transform.rotation;
 	}
 
-	void Animate(float timeFrame)
+	void StartAnimateOpen(float timeFrame)
 	{
-		_animator.Play("Open", 0, timeFrame);
+		_targetTimeFrame = timeFrame;
+		_animateSpeed = 2;
+	}
+
+	void StartAnimateClose()
+	{
+		_targetTimeFrame = 0;
+		_animateSpeed = -2;
+		Debug.Log("cheesee");
+	}
+
+	void Animate()
+	{
+		if (_animateSpeed != 0)
+		{
+			_lerpValue += _animateSpeed * Time.deltaTime;
+			_currentTimeframe = Mathf.Lerp(_currentTimeframe, _targetTimeFrame, _lerpValue);
+			Debug.Log(_lerpValue);
+			_animator.Play("Open", 0, _currentTimeframe);
+
+			_lerpValue = Mathf.Clamp(_lerpValue, 0, 1);
+			if (_lerpValue == 0 || _lerpValue == 1)
+				_animateSpeed = 0;
+		}
 	}
 
 	void OnTriggerEnter(Collider other)

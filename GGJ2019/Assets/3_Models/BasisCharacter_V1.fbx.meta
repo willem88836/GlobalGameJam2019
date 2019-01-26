@@ -1,51 +1,22 @@
 fileFormatVersion: 2
-guid: d5d56fba5e866724bad675168b6c4dd1
+guid: 432bc2d657995494c8a81c125dfb08d4
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Armature
-    100002: Cube
-    100004: HandBone
-    100006: IndexFinger1
-    100008: IndexFinger2
-    100010: IndexFinger3
-    100012: IndexFinger3_end
-    100014: MiddleFinger1
-    100016: MiddleFinger2
-    100018: MiddleFinger3
-    100020: MiddleFinger3_end
-    100022: PinkBone1
-    100024: PinkBone2
-    100026: PinkBone3
-    100028: PinkBone3_end
-    100030: //RootNode
-    100032: Thumb1
-    100034: Thumb2
-    100036: Thumb2_end
-    400000: Armature
-    400002: Cube
-    400004: HandBone
-    400006: IndexFinger1
-    400008: IndexFinger2
-    400010: IndexFinger3
-    400012: IndexFinger3_end
-    400014: MiddleFinger1
-    400016: MiddleFinger2
-    400018: MiddleFinger3
-    400020: MiddleFinger3_end
-    400022: PinkBone1
-    400024: PinkBone2
-    400026: PinkBone3
-    400028: PinkBone3_end
-    400030: //RootNode
-    400032: Thumb1
-    400034: Thumb2
-    400036: Thumb2_end
-    2100000: Material.001
-    4300000: Cube
-    7400000: Armature|Grab
-    9500000: //RootNode
-    13700000: Cube
+    100000: //RootNode
+    100002: Oogballen
+    100004: Retopo.Copy
+    400000: //RootNode
+    400002: Oogballen
+    400004: Retopo.Copy
+    2100000: No Name
+    2100002: Material.001
+    2300000: Oogballen
+    2300002: Retopo.Copy
+    3300000: Oogballen
+    3300002: Retopo.Copy
+    4300000: Oogballen
+    4300002: Retopo.Copy
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -73,35 +44,7 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations:
-    - serializedVersion: 16
-      name: Armature|Grab
-      takeName: Armature|Grab
-      firstFrame: 0
-      lastFrame: 24
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
+    clipAnimations: []
     isReadable: 1
   meshes:
     lODScreenPercentages: []
@@ -126,8 +69,8 @@ ModelImporter:
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
     useFileScale: 1
-    previousCalculatedGlobalScale: 0.01
-    hasPreviousCalculatedGlobalScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
@@ -154,7 +97,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 2
+  animationType: 0
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
