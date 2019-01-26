@@ -29,6 +29,7 @@ public class CustomNetworkManager : NetworkManager
 	void JoinPressed()
 	{
 		StartClient();
+		Debug.Log("Attempting to connect: " + networkAddress);
 	}
 
 	void IpChanged(string text)

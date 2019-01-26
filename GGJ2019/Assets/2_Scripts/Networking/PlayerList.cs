@@ -9,6 +9,8 @@ public class PlayerList : MonoBehaviour
 
 	private List<NetworkPlayer> _playerList;
 
+	private NetworkPlayer _localPlayer;
+
 	public UnityAction OnPlayerJoined;
 
 	void Awake()
@@ -30,6 +32,9 @@ public class PlayerList : MonoBehaviour
 		{
 			_playerList.Add(player);
 
+			if (player.isLocalPlayer)
+				_localPlayer = player;
+
 			if (OnPlayerJoined != null)
 				OnPlayerJoined.Invoke();
 		}
@@ -49,6 +54,11 @@ public class PlayerList : MonoBehaviour
 	public List<NetworkPlayer> GetList()
 	{
 		return _playerList;
+	}
+
+	public NetworkPlayer GetLocalPlayer()
+	{
+		return _localPlayer;
 	}
 
 	public static PlayerList Singleton()
