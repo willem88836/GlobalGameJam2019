@@ -21,6 +21,7 @@ public class HandGrabber : MonoBehaviour
 	void Start()
 	{
 		_handMover = transform.parent.GetComponent<HandMover>();
+		_nearestObject = null;
 	}
 
 	void Update()

@@ -2,13 +2,13 @@
 
 public class ForkPoint : MonoBehaviour
 {
-	Fork _fork;
+	GrabObject _fork;
 
 	GrabObject _grabbedObject;
 
 	void Start()
 	{
-		_fork = transform.parent.GetComponent<Fork>();	
+		_fork = transform.parent.GetComponent<GrabObject>();	
 	}
 
 	private void Update()

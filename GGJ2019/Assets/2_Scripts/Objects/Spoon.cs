@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Spoon : MonoBehaviour
+public class Spoon : GrabObject
 {
 	[SerializeField] private float _heightThreshold = -2f;
 

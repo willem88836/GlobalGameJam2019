@@ -11,6 +11,9 @@ public class GrabObject : MonoBehaviour
 	public static int DEFAULTLAYER = 0; 
 	public static int GRABBEDLAYER = 9;
 
+	[HideInInspector] public bool Grabbed; // Mayhaps just replace this to GrabObject?
+
+
 	void Start()
 	{
 		_rigidbody = GetComponent<Rigidbody>();
@@ -20,6 +23,7 @@ public class GrabObject : MonoBehaviour
 	{
 		gameObject.layer = GRABBEDLAYER;
 		_rigidbody.useGravity = false;
+		Grabbed = true;
 	}
 
 	public virtual void Release(Vector3 velocity)
@@ -27,5 +31,6 @@ public class GrabObject : MonoBehaviour
 		gameObject.layer = DEFAULTLAYER;
 		_rigidbody.useGravity = true;
 		_rigidbody.velocity = velocity * _throwForceMultiplier;
+		Grabbed = false;
 	}
 }

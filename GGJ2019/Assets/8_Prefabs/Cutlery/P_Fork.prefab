@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 861975299}
   - component: {fileID: 861975298}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: ForkPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -70,9 +70,9 @@ GameObject:
   - component: {fileID: 1365067720}
   - component: {fileID: 1365067717}
   - component: {fileID: 1365067718}
-  - component: {fileID: 1365067719}
+  - component: {fileID: 7644738139404252105}
   m_Layer: 0
-  m_Name: SM_Fork_002
+  m_Name: P_Fork
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,7 +168,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 7e58877c5bf3e00498603aebcb7d3059, type: 3}
---- !u!114 &1365067719
+--- !u!114 &7644738139404252105
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1365067716}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a18f2ca61e51344da96ccd4a2713bc4, type: 3}
+  m_Script: {fileID: 11500000, guid: 839e6a3f62dc90749a6beea4e29e0a05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Grabbed: 0
