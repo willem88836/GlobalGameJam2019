@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
 public class GrabObject : MonoBehaviour
 {
 	// will eventually also contain information about how far the hand closes, dirt value, et cetera
@@ -12,20 +11,19 @@ public class GrabObject : MonoBehaviour
 	int _defaultLayer = 0; 
 	int _grabbedLayer = 9;
 
-	bool _released = false;
-
 	void Start()
 	{
-		_rigidbody = GetComponent<Rigidbody>();	
+		_rigidbody = transform.parent.GetComponent<Rigidbody>();
+		Debug.Log(_rigidbody);
 	}
 
-	public void Grab()
+	public virtual void Grab()
 	{
 		gameObject.layer = _grabbedLayer;
 		_rigidbody.useGravity = false;
 	}
 
-	public void Release(Vector3 velocity)
+	public virtual void Release(Vector3 velocity)
 	{
 		gameObject.layer = _defaultLayer;
 		_rigidbody.useGravity = true;
