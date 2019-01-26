@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4419141568268306468}
   - component: {fileID: 6672955343160931979}
   m_Layer: 0
-  m_Name: PlayerHead
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 7254255977867886032}
   - component: {fileID: 3480952443445442328}
   m_Layer: 0
-  m_Name: PlayerHand
+  m_Name: Hand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -154,7 +154,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Rigidbody: {fileID: 0}
   _head: {fileID: 7784052756735253912}
-  _speed: 20
+  _speedHorizontal: 20
+  _speedVertical: 15
+  _dampTime: 0.5
 --- !u!1 &3479997139234789155
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +172,7 @@ GameObject:
   - component: {fileID: 7558477080997225822}
   - component: {fileID: 5548806319010304862}
   m_Layer: 0
-  m_Name: TmpPlayer
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
