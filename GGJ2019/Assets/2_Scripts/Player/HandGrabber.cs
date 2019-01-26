@@ -3,12 +3,19 @@ using UnityEngine;
 
 public class HandGrabber : MonoBehaviour
 {
+	HandMover _handMover;
+
 	bool _isGrabbing;
 	GrabObject _grabbedObject;
 
 	List<GrabObject> _grabables = new List<GrabObject>();
 
-    void Update()
+	void Start()
+	{
+		_handMover = transform.parent.GetComponent<HandMover>();
+	}
+
+	void Update()
     {
 		if (_isGrabbing)
 		{
@@ -31,7 +38,7 @@ public class HandGrabber : MonoBehaviour
 
 		if (_grabables.Count == 0)
 			return;
-
+		
 		_grabbedObject = _grabables[0];
 
 		if (_grabables.Count > 1)
@@ -54,19 +61,26 @@ public class HandGrabber : MonoBehaviour
 		}
 	}
 
+	/// <summary>
+	///		Release the grabbed object
+	/// </summary>
 	void ReleaseGrab()
 	{
 		_isGrabbing = false;
 		if (_grabbedObject == null)
 			return;
 
-		_grabbedObject.Release();
+		_grabbedObject.Release(_handMover.Rigidbody.velocity);
 		_grabbedObject = null;
 	}
 
+	/// <summary>
+	///		Hold the object in place, in the hand
+	/// </summary>
 	void HoldObject()
 	{
 		_grabbedObject.transform.position = transform.position;
+		_grabbedObject.transform.rotation = transform.rotation;
 	}
 
 	void OnTriggerEnter(Collider other)
