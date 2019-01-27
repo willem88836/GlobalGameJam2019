@@ -2,16 +2,16 @@
 
 public abstract class ToolPoint<T> : MonoBehaviour
 {
-	private GrabObject _grabObject;
+	protected GrabObject MyGrabObject;
 
 	private void Awake()
 	{
-		_grabObject = transform.parent.GetComponent<GrabObject>();
+		MyGrabObject = transform.parent.GetComponent<GrabObject>();
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (!_grabObject.Grabbed)
+		if (!MyGrabObject.Grabbed)
 			return;
 
 		T obj = other.GetComponent<T>();

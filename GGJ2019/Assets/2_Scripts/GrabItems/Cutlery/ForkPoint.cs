@@ -1,44 +1,39 @@
 ﻿using UnityEngine;
 
-// TODO: Do something with IForkeable
-public class ForkPoint : MonoBehaviour
+public class ForkPoint : ToolPoint<IForkable>
 {
-	GrabObject _fork;
-
 	GrabObject _grabbedObject;
-
-	void Start()
+	
+	protected override void Invoke(IForkable obj)
 	{
-		_fork = transform.parent.GetComponent<GrabObject>();	
+		obj.OnFork();
+		_grabbedObject = (GrabObject)obj;
 	}
 
 	private void Update()
 	{
-		HoldObject();
-	}
-
-	void HoldObject()
-	{
-		if (_grabbedObject != null)
+		if(_grabbedObject != null)
 		{
 			_grabbedObject.transform.position = transform.position;
 
-			if (_fork.Grabbed == false)
+			if(!MyGrabObject.Grabbed)
 			{
 				_grabbedObject.Release(Vector3.zero);
 				_grabbedObject = null;
-				_fork.GetComponent<Collider>().enabled = true;
+				_grabbedObject.gameObject.layer = GrabObject.GRABBEDLAYER;
+				_grabbedObject.GetComponent<Collider>().enabled = true;
 			}
 		}
 	}
 
-	void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter(Collider other)
 	{
-		if (_fork.Grabbed && other.gameObject.GetComponent<GrabObject>() && _grabbedObject == null)
+		IForkable forkable = other.GetComponent<IForkable>();
+		if (MyGrabObject.Grabbed && _grabbedObject == null && forkable != null)
 		{
-			_grabbedObject = other.GetComponent<GrabObject>();
+			other.enabled = false;
+			_grabbedObject = (GrabObject)forkable;
 			_grabbedObject.Grab();
-			_fork.GetComponent<Collider>().enabled = false;
 		}
 	}
 }

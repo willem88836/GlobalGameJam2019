@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class SimpleDisgustingObject : GrabObject, IDisgusting, IEdible, IObjective
+public class SimpleDisgustingObject : GrabObject, IDisgusting, IEdible, IObjective, IForkable
 {
 	[SerializeField] private float _disgustingValue = 5;
 
@@ -22,5 +22,9 @@ public class SimpleDisgustingObject : GrabObject, IDisgusting, IEdible, IObjecti
 			OnComplete.Invoke(this);
 
 		Destroy(gameObject);
+	}
+
+	public void OnFork()
+	{
 	}
 }
