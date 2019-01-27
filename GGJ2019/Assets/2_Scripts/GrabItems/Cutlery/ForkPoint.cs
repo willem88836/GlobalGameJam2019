@@ -7,7 +7,10 @@ public class ForkPoint : ToolPoint<IForkable>
 	protected override void Invoke(IForkable obj)
 	{
 		obj.OnFork();
-		_grabbedObject = (GrabableObject)obj;
+		_grabbedObject = (obj as MonoBehaviour).GetComponent<GrabableObject>();
+		_grabbedObject.OnGrab(transform, MyGrabObject._playerGrabber);
+		_grabbedObject.GetComponent<Collider>().enabled = false;
+		_grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
 	}
 
 	private void Update()
@@ -24,22 +27,17 @@ public class ForkPoint : ToolPoint<IForkable>
 
 			if(!MyGrabObject.IsGrabbed())
 			{
-				_grabbedObject.OnRelease(Vector3.zero);
-				_grabbedObject = null;
-				_grabbedObject.gameObject.layer = GrabObject.GRABBEDLAYER;
-				_grabbedObject.GetComponent<Collider>().enabled = true;
+				Drop();
 			}
 		}
 	}
 
-	private void OnTriggerEnter(Collider other)
+	private void Drop()
 	{
-		IForkable forkable = other.GetComponent<IForkable>();
-		if (MyGrabObject.IsGrabbed() && _grabbedObject == null && forkable != null)
-		{
-			other.enabled = false;
-			_grabbedObject = (GrabableObject)forkable;
-			_grabbedObject.OnGrab(transform, MyGrabObject._playerGrabber);
-		}
+		_grabbedObject.OnRelease(Vector3.zero);
+		_grabbedObject = null;
+		_grabbedObject.gameObject.layer = GrabObject.GRABBEDLAYER;
+		_grabbedObject.GetComponent<Collider>().enabled = true;
+		_grabbedObject.GetComponent<Rigidbody>().isKinematic = false;
 	}
 }

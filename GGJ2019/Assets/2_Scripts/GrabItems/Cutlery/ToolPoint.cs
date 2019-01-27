@@ -20,6 +20,7 @@ public abstract class ToolPoint<T> : MonoBehaviour
 		T obj = other.GetComponent<T>();
 		if (obj != null)
 		{
+			Debug.Log(other.name);
 			Invoke(obj);
 		}
 	}
