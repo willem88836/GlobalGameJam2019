@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class SimpleDisgustingObject : MonoBehaviour, IDisgusting, IEdible, IObjective
+public class SimpleDisgustingObject : GrabObject, IDisgusting, IEdible, IObjective
 {
 	[SerializeField] private float _disgustingValue = 5;
 

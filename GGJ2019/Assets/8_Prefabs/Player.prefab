@@ -78,8 +78,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 100
-  _minBoundaries: {x: -60, y: -90}
-  _maxBoundaries: {x: 45, y: 90}
+  _minBoundaries: {x: -45, y: -90}
+  _maxBoundaries: {x: 60, y: 90}
 --- !u!1 &1249885020978904084
 GameObject:
   m_ObjectHideFlags: 0
