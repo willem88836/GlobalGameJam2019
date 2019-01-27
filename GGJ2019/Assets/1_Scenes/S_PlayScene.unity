@@ -508,7 +508,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc1639642ca8454986007e466142e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _newObjectivesInterval: 60
+  _roundDuration: 30
+  _pauseDuration: 5
   _objectiveRange: {x: 2, y: 4}
   _spawnRange: {x: 6, y: 10}
   _objectContainer: {fileID: 812482429}
@@ -1044,6 +1045,26 @@ PrefabInstance:
         type: 3}
       propertyPath: _randomRotation
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3583979342916711832, guid: 331a7dddeffb6cd428d653af53ac6d8d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5192430643469528435, guid: 331a7dddeffb6cd428d653af53ac6d8d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5364175955853490751, guid: 331a7dddeffb6cd428d653af53ac6d8d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427546038136133816, guid: 331a7dddeffb6cd428d653af53ac6d8d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 331a7dddeffb6cd428d653af53ac6d8d, type: 3}
