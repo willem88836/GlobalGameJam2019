@@ -53,7 +53,6 @@ public class PlayerHandSync : NetworkBehaviour
 	[Server]
 	public void SetLocalMovement()
 	{
-		Debug.Log("Setting local movement");
 
 		DisableMovementSync();
 		RpcSetLocalMovement();

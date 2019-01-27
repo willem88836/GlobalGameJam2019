@@ -9,8 +9,8 @@ public class ObjectiveManager : NetworkBehaviour
 
 	[SerializeField] private float _newObjectivesInterval = 30f;
 
-	Vector2 _objectiveRange = new Vector2(2, 4);
-	Vector2 _spawnRange = new Vector2(6, 10);
+	[SerializeField] Vector2 _objectiveRange = new Vector2(2, 4);
+	[SerializeField] Vector2 _spawnRange = new Vector2(6, 10);
 	//[SerializeField] private Int2 _ediblesRange;
 	//[SerializeField] private Int2 _objectiveRange;
 
