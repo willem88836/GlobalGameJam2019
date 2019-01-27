@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Meatball : GrabObject, IDisgusting, ISliceable, IObjective, IForkable
+public class Meatball : NetworkBehaviour, IDisgusting, ISliceable, IObjective, IForkable
 {
 	[SerializeField] private GameObject _meatballHalf;
 	[SerializeField] private int _meatballHalfCount;
@@ -30,9 +31,13 @@ public class Meatball : GrabObject, IDisgusting, ISliceable, IObjective, IForkab
 			obj.OnComplete = this.OnComplete;
 			obj.Type = this.Type;
 			obj.Player = this.Player;
+
+			mbh.GetComponent<ObjectSync>().ForceSync(mbh.transform);
+
+			NetworkServer.Spawn(mbh);
 		}
 
-		Destroy(this);
+		NetworkServer.Destroy(this.gameObject);
 	}
 
 	public void OnFork()
