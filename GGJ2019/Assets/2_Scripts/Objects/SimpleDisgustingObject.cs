@@ -15,4 +15,9 @@ public class SimpleDisgustingObject : MonoBehaviour, IDisgusting, IObjective
 	{
 		return _disgustingValue;
 	}
+
+	public void OnFork()
+	{
+	}
 }
+

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class Meatball : GrabObject, IDisgusting, ISliceable, IObjective
+public class Meatball : GrabObject, IDisgusting, ISliceable, IObjective, IForkable
 {
 	[SerializeField] private GameObject _meatballHalf;
 	[SerializeField] private int _meatballHalfCount;
@@ -33,5 +33,9 @@ public class Meatball : GrabObject, IDisgusting, ISliceable, IObjective
 		}
 
 		Destroy(this);
+	}
+
+	public void OnFork()
+	{
 	}
 }
