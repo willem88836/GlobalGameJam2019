@@ -18,9 +18,6 @@ public class Clock : MonoBehaviour
     {
 		if (_isCountingDown)
 			CountDown();
-
-		if (Input.GetKeyDown(KeyCode.Space))
-			SetTimer(5, true);
     }
 
 	public void SetTimer(float time, bool startCountingDown)
