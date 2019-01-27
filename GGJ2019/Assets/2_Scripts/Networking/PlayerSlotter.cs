@@ -82,6 +82,11 @@ public class PlayerSlotter : NetworkBehaviour
 	}
 
 	[Server]
+	public NetworkPlayer GetPlayer(TableSegment segment)
+	{
+		return GetPlayer(segment.GetSlot());
+	}
+	[Server]
 	public PlayerSlot GetSlot(NetworkPlayer player)
 	{
 		List<PlayerSlot> keys = new List<PlayerSlot>(_playerDictionary.Keys);

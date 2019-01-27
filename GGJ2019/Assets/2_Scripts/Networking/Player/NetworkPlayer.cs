@@ -5,16 +5,20 @@ using UnityEngine.Networking;
 
 public class NetworkPlayer : NetworkBehaviour
 {
-	[HideInInspector] public float SegmentDirtyness = 0.0f;
-
 	[Header("Latency")]
 	[SerializeField] int _trackCount = 10;
+
+	[Header("Awards")]
+	[SerializeField] GameObject _mostEatenCrown;
+	[SerializeField] GameObject _dirtiestCrown;
 
 	List<int> _pingTracker = new List<int>();
 	int _averagePing = 0;
 
 	PlayerHandSync _handSync;
 	PlayerHeadSync _headSync;
+
+	bool _awarded = false;
 
     public NetworkInstanceId GetNetId()
 	{
@@ -36,11 +40,8 @@ public class NetworkPlayer : NetworkBehaviour
 		RpcPositionPlayer(slot.transform.position, slot.transform.rotation);
 
 		_handSync.ForceSync(slot.HandStartPoint);
-		//_handSync.SetLocalMovement();
-		//_handSync.SetLocalRotate();
 
 		_headSync.ForceSync(slot.HeadStartPoint);
-		//_headSync.SetLocalRotate();
 	}
 
 	[ClientRpc]
@@ -65,7 +66,91 @@ public class NetworkPlayer : NetworkBehaviour
 
 		Debug.Log(">> Granda is angry at you! <<");
 	}
+	
+	// AWARDSs
 
+	[Server]
+	public void MostEatenAward()
+	{
+		if (!_awarded)
+		{
+			_awarded = true;
+
+			if (!_mostEatenCrown.activeSelf)
+				_mostEatenCrown.SetActive(true);
+			// TODO: show crown
+		}
+
+		RpcMostEatenAward();
+	}
+
+	[ClientRpc]
+	void RpcMostEatenAward()
+	{
+		if (!_awarded)
+		{
+			_awarded = true;
+
+			if (!_mostEatenCrown.activeSelf)
+				_mostEatenCrown.SetActive(true);
+			// TODO: show crown
+		}
+
+		if (isLocalPlayer)
+		{
+			// TOOD: spawn message
+			Debug.Log("You wont the Most eaten award!");
+		}
+	}
+
+	[Server]
+	public void DirtiestAward()
+	{
+		if (!_awarded)
+		{
+			_awarded = true;
+
+			if (!_dirtiestCrown.activeSelf)
+				_dirtiestCrown.SetActive(true);
+			// TODO: show crown
+		}
+
+		RpcDirtiestAward();
+	}
+
+	[ClientRpc]
+	void RpcDirtiestAward()
+	{
+		if (!_awarded)
+		{
+			_awarded = true;
+
+			if (!_dirtiestCrown.activeSelf)
+				_dirtiestCrown.SetActive(true);
+			// TODO: show crown
+		}
+
+		if (isLocalPlayer)
+		{
+			// TOOD: spawn message
+			Debug.Log("You are the dirtiest player!");
+		}
+	}
+
+	[Server]
+	public void ResetAwards()
+	{
+		if (!_awarded)
+			return;
+
+		_awarded = false;
+
+		if (_mostEatenCrown.activeSelf)
+			_mostEatenCrown.SetActive(false);
+		// TODO: Disable each award object
+	}
+
+	// PING
 
 	[Client]
 	public void PingPlayer(int hostId, int serverStamp)
