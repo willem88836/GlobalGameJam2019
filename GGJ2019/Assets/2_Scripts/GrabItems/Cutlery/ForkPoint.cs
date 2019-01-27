@@ -14,6 +14,12 @@ public class ForkPoint : ToolPoint<IForkable>
 	{
 		if(_grabbedObject != null)
 		{
+			if (_grabbedObject.gameObject == null)
+			{
+				_grabbedObject = null;
+				return;
+			}
+
 			_grabbedObject.transform.position = transform.position;
 
 			if(!MyGrabObject.Grabbed)
