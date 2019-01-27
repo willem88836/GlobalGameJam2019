@@ -449,6 +449,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Fork
       objectReference: {fileID: 0}
+    - target: {fileID: 1365067716, guid: 485afd7c64a4b424b97021cbc1ab2973, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 485afd7c64a4b424b97021cbc1ab2973, type: 3}
 --- !u!4 &3971742785049458974 stripped
@@ -523,6 +527,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_Spoon
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734738476177580426, guid: 11cc339d6d1496d458217fd278a1eb71,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11cc339d6d1496d458217fd278a1eb71, type: 3}
@@ -613,6 +622,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P_Knife
+      objectReference: {fileID: 0}
+    - target: {fileID: 2968577092088106752, guid: e655476e55ac6c14fa84c3beeff067a9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e655476e55ac6c14fa84c3beeff067a9, type: 3}
