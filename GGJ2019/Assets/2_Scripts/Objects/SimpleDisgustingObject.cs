@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class SimpleDisgustingObject : GrabObject, IDisgusting, IEdible, IObjective
+public class SimpleDisgustingObject : MonoBehaviour, IDisgusting, IObjective
 {
 	[SerializeField] private float _disgustingValue = 5;
 
@@ -14,13 +14,5 @@ public class SimpleDisgustingObject : GrabObject, IDisgusting, IEdible, IObjecti
 	public virtual float GetDistgustingValue()
 	{
 		return _disgustingValue;
-	}
-
-	public void OnEat()
-	{
-		if (OnComplete != null)
-			OnComplete.Invoke(this);
-
-		Destroy(gameObject);
 	}
 }
