@@ -31,14 +31,14 @@ public class PlayerGrabber : NetworkBehaviour
 
 	void ServerUpdate()
 	{
-		if (_grabbedObject != null)
-			_grabbedObject.OnCarry(_grabPoint);
+		if (_grabbedObject != null && _grabbedObject.IsGrabbed())
+			_grabbedObject.OnCarry();
 	}
 
 	void ClientUpdate()
 	{
-		if (_grabbedObject != null)
-			_grabbedObject.OnCarry(_grabPoint);
+		if (_grabbedObject != null && _grabbedObject.IsGrabbed())
+			_grabbedObject.OnCarry();
 
 		if (!isLocalPlayer)
 			return;
@@ -74,7 +74,7 @@ public class PlayerGrabber : NetworkBehaviour
 			return;
 
 		_grabbedObject = grab;
-		_grabbedObject.OnGrab(_grabPoint, this);
+		_grabbedObject.OnGrab(this);
 
 		RpcGrabLocalObject(grab.GetNetId());
 	}
@@ -94,15 +94,16 @@ public class PlayerGrabber : NetworkBehaviour
 			return;
 
 		_grabbedObject = grab;
+		_grabbedObject.OnGrab(this);
 	}
 
 	[Server]
 	public void ForceRelease()
 	{
+		RpcReleaseLocalObject();
+
 		if (_grabbedObject == null)
 			return;
-
-		RpcReleaseLocalObject();
 
 		_grabbedObject.OnRelease(_handSync.GetLastVelocity());
 		_grabbedObject = null;
@@ -129,6 +130,13 @@ public class PlayerGrabber : NetworkBehaviour
 		_grabbedObject.OnRelease(_handSync.GetLastVelocity());
 		_grabbedObject = null;
 	}
+
+	public Transform GetGrabPoint()
+	{
+		return _grabPoint;
+	}
+
+	// ANIMATE
 
 	[Command]
 	void CmdAnimateOpen()

@@ -5,11 +5,13 @@ using UnityEngine.Networking;
 
 public interface IGrabable
 {
-	void OnGrab(Transform point, PlayerGrabber grabber);
+	void OnGrab(PlayerGrabber grabber);
 
-	void OnCarry(Transform point);
+	void OnCarry();
 
 	void OnRelease(Vector3 velocity);
+
+	bool IsGrabbed();
 
 	NetworkInstanceId GetNetId();
 }

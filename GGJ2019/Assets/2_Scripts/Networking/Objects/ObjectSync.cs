@@ -48,6 +48,14 @@ public class ObjectSync : NetworkBehaviour
 		}
 	}
 
+	private void OnDestroy()
+	{
+		if (isServer)
+		{
+			DisableSync();
+		}
+	}
+
 	[Server]
 	public void SetServerMovement()
 	{
@@ -107,16 +115,20 @@ public class ObjectSync : NetworkBehaviour
 		DisableRotateSync();
 	}
 
+	[Server]
 	public void DisableSync()
 	{
+		PlayerList.Singleton().OnPlayerJoined -= delegate { ForceSync(_transform); };
+
 		DisableMovementSync();
 		DisableRotateSync();
-
-		PlayerList.Singleton().OnPlayerJoined -= delegate { ForceSync(_transform); };
 	}
 
 	void DisableMovementSync()
 	{
+		//if (!gameObject.activeSelf)
+		//	return;
+
 		if (_syncMovement != null)
 		{
 			StopCoroutine(_syncMovement);
@@ -359,6 +371,9 @@ public class ObjectSync : NetworkBehaviour
 	[Server]
 	public void ForceSync(Transform point)
 	{
+		if (point == null)
+			return;
+
 		_lastMoveUpdate = Time.time;
 		_lastRotateUpdate = Time.time;
 

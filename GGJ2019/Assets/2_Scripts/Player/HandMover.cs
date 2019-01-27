@@ -80,8 +80,8 @@ public class HandMover : MonoBehaviour
 		float moveY = Input.GetAxis("DPadHorizontal");
 		float moveX = Input.GetAxis("DPadVertical");
 
-		_rotX += -moveX;
-		_rotY += -moveY;
+		_rotX += -moveX * _rotationSpeed;
+		_rotY += -moveY * _rotationSpeed;
 
 		_rotX = Mathf.Clamp(_rotX, _xRotBounds.x, _xRotBounds.y);
 		_rotY = Mathf.Clamp(_rotY, _yRotBounds.x, _yRotBounds.y);

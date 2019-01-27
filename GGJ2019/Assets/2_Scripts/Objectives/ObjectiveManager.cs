@@ -159,6 +159,12 @@ public class ObjectiveManager : NetworkBehaviour
 	[Server]
 	public void OnAteEdible(NetworkPlayer player)
 	{
+		if (_segmentCollection == null)
+			return;
+
+		if (player == null)
+			return;
+
 		TableSegment segment = _segmentCollection.GetSegment(player);
 
 		if (segment == null)
@@ -166,18 +172,7 @@ public class ObjectiveManager : NetworkBehaviour
 
 		Objective objective = _objectives[segment];
 		objective.Progress++;
-
-		if (objective.IsComplete())
-		{
-			// TODO: Reward?
-			//Debug.Log("A player completed the challenge");
-		}
 	}
-	//private void OnComplete(IObjective completed)
-	//{
-	//	_objectives[completed.Player].Progress++;
-	//	// TODO: somethign with points and effects or something	? 
-	//}
 
 	[Server]
 	private void Clear()
