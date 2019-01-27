@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Egg : GrabObject, ISpoonable, IObjective
+public class Egg : NetworkBehaviour, ISpoonable, IObjective
 {
 	public int Type { get; set; }
 	public NetworkPlayer Player { get; set; }
@@ -14,7 +15,8 @@ public class Egg : GrabObject, ISpoonable, IObjective
 
 	public void OnSpoon()
 	{
-		Instantiate(_eggHolder, transform.position + Vector3.left, Quaternion.identity, transform.parent);
+		GameObject eggHolder = Instantiate(_eggHolder, transform.position + Vector3.left, Quaternion.identity, transform.parent);
+		NetworkServer.Spawn(eggHolder);
 
 		GameObject egg = Instantiate(_egg, transform.position + Vector3.right, Quaternion.identity, transform.parent);
 		IObjective obj = egg.GetComponent<IObjective>();
@@ -22,6 +24,8 @@ public class Egg : GrabObject, ISpoonable, IObjective
 		obj.Player = this.Player;
 		obj.OnComplete = this.OnComplete;
 
-		Destroy(gameObject);
+		NetworkServer.Spawn(egg);
+
+		NetworkServer.Destroy(this.gameObject);
 	}
 }

@@ -1045,6 +1045,21 @@ PrefabInstance:
       propertyPath: _randomRotation
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7113997308039173135, guid: 331a7dddeffb6cd428d653af53ac6d8d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 822174630255571585, guid: 331a7dddeffb6cd428d653af53ac6d8d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7823609226921772696, guid: 331a7dddeffb6cd428d653af53ac6d8d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 331a7dddeffb6cd428d653af53ac6d8d, type: 3}
 --- !u!4 &726959923 stripped

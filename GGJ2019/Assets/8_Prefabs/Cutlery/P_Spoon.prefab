@@ -250,6 +250,7 @@ MonoBehaviour:
   _rigid: {fileID: 1565651657}
   _colliders:
   - {fileID: 2341278976807871001}
+  - {fileID: 7896015055621656171}
   _trackCount: 10
   _maxDeltaInterval: 0.5
 --- !u!114 &279526935431013659
