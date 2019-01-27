@@ -67,7 +67,7 @@ public class TableSegmentCollection : MonoBehaviour
 			TableSegment current = Segments[i];
 			NetworkPlayer player = _slotter.GetPlayer(current);
 
-			if (player != null)
+			if (player == null)
 				continue;
 
 			float value = current.GetDisgustingValue();
