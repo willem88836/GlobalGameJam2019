@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 204133024}
   - component: {fileID: 204133023}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TimerText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -418,6 +418,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 289978522}
+  - component: {fileID: 6655508815100380926}
   m_Layer: 0
   m_Name: Clock
   m_TagString: Untagged
@@ -445,6 +446,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 136.98001, z: 0}
+--- !u!114 &6655508815100380926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6655508815100380925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cb9fc50940a8cc49be924282695ae41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timerText: {fileID: 204133023}
 --- !u!1 &7399397350613805458
 GameObject:
   m_ObjectHideFlags: 0
