@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
 
-public class RespawnableObject : GrabObject
+public class RespawnableObject : NetworkBehaviour
 {
 	[SerializeField] private float _heightThreshold = -2f;
 
@@ -8,9 +9,11 @@ public class RespawnableObject : GrabObject
 	private Quaternion _originRotation;
 
 
-	public override void Start()
+	public void Start()
 	{
-		base.Start();
+		if (!isServer)
+			enabled = false;
+
 		_originPosition = transform.position;
 		_originRotation = transform.rotation;
 	}
@@ -21,6 +24,8 @@ public class RespawnableObject : GrabObject
 		{
 			transform.SetPositionAndRotation(_originPosition, _originRotation);
 			GetComponent<Rigidbody>().velocity = Vector3.zero;
+
+			GetComponent<ObjectSync>().ForceSync(transform);
 		}
 	}
 }

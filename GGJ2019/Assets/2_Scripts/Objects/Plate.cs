@@ -2,8 +2,6 @@
 
 public class Plate : MonoBehaviour // TODO: Make this grabbable.
 {
-	[SerializeField] private float _heightThreshold = -2f;
-
 	private Vector3 _originPosition;
 	private Quaternion _originRotation;
 
@@ -29,15 +27,6 @@ public class Plate : MonoBehaviour // TODO: Make this grabbable.
 		if (disgusting != null)
 		{
 			disgusting.IsOnPlate = false;
-		}
-	}
-
-	private void Update()
-	{
-		if (transform.position.y <= _heightThreshold)
-		{
-			transform.SetPositionAndRotation(_originPosition, _originRotation);
-			GetComponent<Rigidbody>().velocity = Vector3.zero;
 		}
 	}
 }
