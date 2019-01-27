@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.33962262, g: 0.22558777, b: 0.12655748, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
@@ -2844,7 +2844,7 @@ PrefabInstance:
     - target: {fileID: 6866240677998027779, guid: 331a7dddeffb6cd428d653af53ac6d8d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2
+      value: 5.3
       objectReference: {fileID: 0}
     - target: {fileID: 6866240677998027781, guid: 331a7dddeffb6cd428d653af53ac6d8d,
         type: 3}
@@ -2869,7 +2869,7 @@ PrefabInstance:
     - target: {fileID: 2631353571368315812, guid: 331a7dddeffb6cd428d653af53ac6d8d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2
+      value: 5.3
       objectReference: {fileID: 0}
     - target: {fileID: 2631353571368315812, guid: 331a7dddeffb6cd428d653af53ac6d8d,
         type: 3}
@@ -2909,7 +2909,7 @@ PrefabInstance:
     - target: {fileID: 2713304290178713891, guid: 331a7dddeffb6cd428d653af53ac6d8d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2
+      value: 5.3
       objectReference: {fileID: 0}
     - target: {fileID: 2713304290178713891, guid: 331a7dddeffb6cd428d653af53ac6d8d,
         type: 3}
@@ -2949,7 +2949,7 @@ PrefabInstance:
     - target: {fileID: 2808605236876360936, guid: 331a7dddeffb6cd428d653af53ac6d8d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.2
+      value: 5.3
       objectReference: {fileID: 0}
     - target: {fileID: 2808605236876360936, guid: 331a7dddeffb6cd428d653af53ac6d8d,
         type: 3}
@@ -6079,6 +6079,16 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 2.8
       objectReference: {fileID: 0}
+    - target: {fileID: 2180765642569786956, guid: 817b284d1ec32443fb16a5c092018ebb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: c2150bc87e63505458c5e41b9a3e0845, type: 2}
+    - target: {fileID: 2180765643335936754, guid: 817b284d1ec32443fb16a5c092018ebb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: c2150bc87e63505458c5e41b9a3e0845, type: 2}
     - target: {fileID: 2180765642475764215, guid: 817b284d1ec32443fb16a5c092018ebb,
         type: 3}
       propertyPath: m_Range
