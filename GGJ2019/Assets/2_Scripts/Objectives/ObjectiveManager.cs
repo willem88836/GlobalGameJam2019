@@ -7,23 +7,29 @@ public class ObjectiveManager : NetworkBehaviour
 {
 	static ObjectiveManager _instance;
 
-	[SerializeField] private float _newObjectivesInterval = 30f;
+	[Header("Duration")]
+	[SerializeField] float _roundDuration = 30f;
+	[SerializeField] float _pauseDuration = 5f;
 
+	[Header("SpawnRanges")]
 	[SerializeField] Vector2 _objectiveRange = new Vector2(2, 4);
 	[SerializeField] Vector2 _spawnRange = new Vector2(6, 10);
-	//[SerializeField] private Int2 _ediblesRange;
-	//[SerializeField] private Int2 _objectiveRange;
 
-	[SerializeField] private Transform _objectContainer;
+	[Header("container")]
+	[SerializeField] Transform _objectContainer;
 
-	[SerializeField] private GameObject[] _objectivePrefabs;
-	[SerializeField] private GameObject[] _ediblePrefabs;
+	[Header("Prefabs")]
+	[SerializeField] GameObject[] _objectivePrefabs;
+	[SerializeField] GameObject[] _ediblePrefabs;
 
-	[SerializeField] private TableSegmentCollection _segmentCollection;
+	[Header("Segments")]
+	[SerializeField] TableSegmentCollection _segmentCollection;
 
 	List<GameObject> _edibles = new List<GameObject>();
 
-	private Dictionary<TableSegment, Objective> _objectives = new Dictionary<TableSegment, Objective>();
+	Dictionary<TableSegment, Objective> _objectives = new Dictionary<TableSegment, Objective>();
+
+	PlayerSlotter _slotter;
 
 	void Awake()
 	{
@@ -38,6 +44,7 @@ public class ObjectiveManager : NetworkBehaviour
 
 	void Start()
 	{
+		_slotter = PlayerSlotter.Singleton();
 
 		if (isServer)
 		{
@@ -61,9 +68,9 @@ public class ObjectiveManager : NetworkBehaviour
 		{
 			Clear();
 
-			//Dictionary<NetworkPlayer, Objective>.KeyCollection keys = _objectives.Keys;
+			// PAUSE
 
-			//Dictionary<NetworkPlayer, Objective> newObjectives = new Dictionary<NetworkPlayer, Objective>();
+			yield return new WaitForSeconds(_pauseDuration);
 
 			int amount = Random.Range((int)_objectiveRange.x, (int)_objectiveRange.y);
 
@@ -74,7 +81,75 @@ public class ObjectiveManager : NetworkBehaviour
 
 			SpawnObjects();
 
-			yield return new WaitForSeconds(_newObjectivesInterval);
+			yield return new WaitForSeconds(_roundDuration);
+
+			ResetAwards();
+			AssignAwards();
+		}
+	}
+
+	[Server]
+	void AssignAwards()
+	{
+		List<NetworkPlayer> dirtiestPlayers = _segmentCollection.GetDirtiesPlayers();
+
+
+
+		List<NetworkPlayer> mostEatenPlayers = GetMostEatenPlayers();
+		for (int i = 0; i < mostEatenPlayers.Count; i++)
+		{
+			NetworkPlayer current = mostEatenPlayers[i];
+			current.MostEatenAward();
+		}
+	}
+
+	List<NetworkPlayer> GetMostEatenPlayers()
+	{
+		List<NetworkPlayer> awarded = new List<NetworkPlayer>();
+
+		int mostAmount = 0;
+		
+		for (int i = 0; i < _objectives.Count; i++)
+		{
+			TableSegment segment = _segmentCollection[i];
+			Objective current = _objectives[segment];
+
+			if (!current.HasEaten())
+				continue;
+
+			if (current.Progress > mostAmount)
+			{
+				mostAmount = current.Progress;
+				awarded.Clear();
+
+				NetworkPlayer player = _slotter.GetPlayer(segment);
+
+				if (player != null)
+					awarded.Add(player);
+			}
+			else if (current.Progress == mostAmount)
+			{
+				NetworkPlayer player = _slotter.GetPlayer(segment);
+
+				if (player != null)
+					awarded.Add(player);
+			}
+		}
+
+		return awarded;
+	}
+
+	[Server]
+	void ResetAwards()
+	{
+		for (int i = 0; i < _segmentCollection.Count; i++)
+		{
+			TableSegment current = _segmentCollection[i];
+
+			NetworkPlayer player = _slotter.GetPlayer(current);
+
+			if (player != null)
+				player.ResetAwards();
 		}
 	}
 
@@ -89,12 +164,10 @@ public class ObjectiveManager : NetworkBehaviour
 		Objective objective = _objectives[segment];
 		objective.Progress++;
 
-		Debug.Log(">> Player ate <<");
-
 		if (objective.IsComplete())
 		{
 			// TODO: Reward?
-			Debug.Log("A player completed the challenge");
+			//Debug.Log("A player completed the challenge");
 		}
 	}
 	//private void OnComplete(IObjective completed)
@@ -210,6 +283,14 @@ public class Objective
 	{
 		Count = amount;
 		Progress = 0;
+	}
+
+	public bool HasEaten()
+	{
+		if (Progress > 0)
+			return true;
+
+		return false;
 	}
 
 	public bool IsComplete()

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 public class TableSegmentCollection : MonoBehaviour
 {
@@ -27,5 +28,65 @@ public class TableSegmentCollection : MonoBehaviour
 		}
 
 		return null;
+	}
+
+	public TableSegment GetDirtiestSegment(bool playerRequired)
+	{
+		int _dirtIndex = -1;
+		float _dirt = 0;
+
+		for (int i = 0; i < Segments.Length; i++)
+		{
+			TableSegment current = Segments[i];
+
+			NetworkPlayer player = _slotter.GetPlayer(current.GetSlot());
+			if (playerRequired && player == null)
+				continue;
+
+			float disgustingValue = current.GetDisgustingValue();
+			if (disgustingValue > 0)
+			{
+				_dirt = disgustingValue;
+				_dirt = i;
+			}
+		}
+
+		if (_dirtIndex < 0)
+			return null;
+
+		return Segments[_dirtIndex];
+	}
+
+	public List<NetworkPlayer> GetDirtiesPlayers()
+	{
+		List<NetworkPlayer> awarded = new List<NetworkPlayer>();
+		float dirtValue = 0;
+
+		for (int i = 0; i < Segments.Length; i++)
+		{
+			TableSegment current = Segments[i];
+
+			float value = current.GetDisgustingValue();
+
+			if (value > dirtValue)
+			{
+				dirtValue = value;
+				awarded.Clear();
+
+				NetworkPlayer player = _slotter.GetPlayer(current);
+
+				if (player != null)
+					awarded.Add(player);
+			}
+			else if (value == dirtValue)
+			{
+				NetworkPlayer player = _slotter.GetPlayer(current);
+
+				if (player != null)
+					awarded.Add(player);
+			}
+		}
+
+		return awarded;
 	}
 }
