@@ -10,6 +10,7 @@ public class NetworkPlayer : NetworkBehaviour
 
 	[Header("Awards")]
 	[SerializeField] GameObject _mostEatenCrown;
+	[SerializeField] GameObject _dirtiestCrown;
 
 	List<int> _pingTracker = new List<int>();
 	int _averagePing = 0;
@@ -99,6 +100,40 @@ public class NetworkPlayer : NetworkBehaviour
 		{
 			// TOOD: spawn message
 			Debug.Log("You wont the Most eaten award!");
+		}
+	}
+
+	[Server]
+	public void DirtiestAward()
+	{
+		if (!_awarded)
+		{
+			_awarded = true;
+
+			if (!_dirtiestCrown.activeSelf)
+				_dirtiestCrown.SetActive(true);
+			// TODO: show crown
+		}
+
+		RpcDirtiestAward();
+	}
+
+	[ClientRpc]
+	void RpcDirtiestAward()
+	{
+		if (!_awarded)
+		{
+			_awarded = true;
+
+			if (!_dirtiestCrown.activeSelf)
+				_dirtiestCrown.SetActive(true);
+			// TODO: show crown
+		}
+
+		if (isLocalPlayer)
+		{
+			// TOOD: spawn message
+			Debug.Log("You are the dirtiest player!");
 		}
 	}
 

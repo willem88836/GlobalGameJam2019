@@ -65,6 +65,10 @@ public class TableSegmentCollection : MonoBehaviour
 		for (int i = 0; i < Segments.Length; i++)
 		{
 			TableSegment current = Segments[i];
+			NetworkPlayer player = _slotter.GetPlayer(current);
+
+			if (player != null)
+				continue;
 
 			float value = current.GetDisgustingValue();
 
@@ -73,17 +77,11 @@ public class TableSegmentCollection : MonoBehaviour
 				dirtValue = value;
 				awarded.Clear();
 
-				NetworkPlayer player = _slotter.GetPlayer(current);
-
-				if (player != null)
-					awarded.Add(player);
+				awarded.Add(player);
 			}
 			else if (value == dirtValue)
 			{
-				NetworkPlayer player = _slotter.GetPlayer(current);
-
-				if (player != null)
-					awarded.Add(player);
+				awarded.Add(player);
 			}
 		}
 

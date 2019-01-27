@@ -92,8 +92,11 @@ public class ObjectiveManager : NetworkBehaviour
 	void AssignAwards()
 	{
 		List<NetworkPlayer> dirtiestPlayers = _segmentCollection.GetDirtiesPlayers();
-
-
+		for (int i = 0; i < dirtiestPlayers.Count; i++)
+		{
+			NetworkPlayer current = dirtiestPlayers[i];
+			current.DirtiestAward();
+		}
 
 		List<NetworkPlayer> mostEatenPlayers = GetMostEatenPlayers();
 		for (int i = 0; i < mostEatenPlayers.Count; i++)
