@@ -239,7 +239,7 @@ MonoBehaviour:
   _speedHorizontal: 10
   _speedVertical: 7.5
   _dampTime: 0.25
-  _rotationSpeed: 100
+  _rotationSpeed: 150
   _xRotBounds: {x: -105, y: 45}
   _yRotBounds: {x: -145, y: 10}
   MinigameActive: 0
