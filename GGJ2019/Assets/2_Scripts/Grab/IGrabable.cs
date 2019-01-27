@@ -12,4 +12,6 @@ public interface IGrabable
 	void OnRelease(Vector3 velocity);
 
 	NetworkInstanceId GetNetId();
+
+	bool IsGrabbed();
 }

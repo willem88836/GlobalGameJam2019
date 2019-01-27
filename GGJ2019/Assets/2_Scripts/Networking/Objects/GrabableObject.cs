@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -11,7 +12,7 @@ public class GrabableObject : NetworkBehaviour, IGrabable
 
 	ObjectSync _objectSync;
 
-	PlayerGrabber _playerGrabber;
+	[NonSerialized] public PlayerGrabber _playerGrabber;
 
 	NetworkInstanceId _netId;
 
@@ -63,6 +64,11 @@ public class GrabableObject : NetworkBehaviour, IGrabable
 			_objectSync.SetServerMovement();
 			_objectSync.SetServerRotate();
 		}
+	}
+
+	public bool IsGrabbed()
+	{
+		return _playerGrabber != null;
 	}
 
 	public NetworkInstanceId GetNetId()

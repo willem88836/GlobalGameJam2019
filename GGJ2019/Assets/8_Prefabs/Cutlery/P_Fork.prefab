@@ -72,6 +72,9 @@ GameObject:
   - component: {fileID: 1365067718}
   - component: {fileID: 8774696801705527004}
   - component: {fileID: 7960643147437189755}
+  - component: {fileID: 7162884114502668694}
+  - component: {fileID: 2485992246858409883}
+  - component: {fileID: 3512653533497011280}
   m_Layer: 0
   m_Name: P_Fork
   m_TagString: Untagged
@@ -197,5 +200,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e008ff3890beea40a3fe556107f7f94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Grabbed: 0
-  _heightThreshold: -2
+  _heightThreshold: -6
+--- !u!114 &7162884114502668694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365067716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
+--- !u!114 &2485992246858409883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365067716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2d33682df4dd924ca3ac5e68c2c87c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _velocityMultiplier: 1
+--- !u!114 &3512653533497011280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1365067716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ff764c199caf82478dadaa204d4862d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 1365067722}
+  _rigid: {fileID: 1365067717}
+  _colliders:
+  - {fileID: 1365067718}
+  _trackCount: 10
+  _maxDeltaInterval: 0.5
