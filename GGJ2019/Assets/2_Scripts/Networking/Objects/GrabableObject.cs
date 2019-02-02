@@ -30,32 +30,45 @@ public class GrabableObject : NetworkBehaviour, IGrabable
 	void OnDestroy()
 	{
 		if (isServer && _playerGrabber != null)
+		{
 			_playerGrabber.ForceRelease();
+		}
 	}
 
-	public void OnGrab(Transform point, PlayerGrabber grabber)
+	public void OnGrab(PlayerGrabber grabber)
 	{
 		_playerGrabber = grabber;
 
 		_rigid.isKinematic = true;
 
-		transform.position = point.position;
-		transform.rotation = point.rotation;
+		OnCarry();
 
-		_objectSync.DisableSync();
+		if (isServer)
+			_objectSync.DisableSync();
 	}
 
-	public void OnCarry(Transform point)
+	public void OnCarry()
 	{
-		//if (this == null)
-		//	return;
+		if (!IsGrabbed())
+			return;
 
-		transform.position = point.position;
-		transform.rotation = point.rotation;
+		Transform grabPoint = _playerGrabber.GetGrabPoint();
+
+		if (transform == null)
+			Debug.LogWarning("Transform was null");
+
+		if (!gameObject.activeSelf)
+			Debug.LogWarning("Gameobject was inactive");
+
+		transform.position = grabPoint.position;
+		transform.rotation = grabPoint.rotation;
 	}
 
 	public void OnRelease(Vector3 velocity)
 	{
+		if (!IsGrabbed())
+			return;
+
 		_rigid.isKinematic = false;
 		_rigid.velocity = velocity * _velocityMultiplier;
 
@@ -68,6 +81,12 @@ public class GrabableObject : NetworkBehaviour, IGrabable
 
 	public bool IsGrabbed()
 	{
+		if (this == null)
+			return false;
+
+		if (!this.enabled)
+			return false;
+
 		return _playerGrabber != null;
 	}
 

@@ -156,6 +156,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Grandma
       objectReference: {fileID: 0}
+    - target: {fileID: 2778005388900251879, guid: ff51b2fa261899043aef3bb7b0e2711f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2778005388900251897, guid: ff51b2fa261899043aef3bb7b0e2711f,
         type: 3}
       propertyPath: _tableSegments.Array.size
@@ -508,21 +513,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2bc1639642ca8454986007e466142e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roundDuration: 30
+  _roundDuration: 60
   _pauseDuration: 5
   _objectiveRange: {x: 2, y: 4}
-  _spawnRange: {x: 6, y: 10}
+  _spawnRange: {x: 6, y: 12}
   _objectContainer: {fileID: 812482429}
   _objectivePrefabs:
   - {fileID: 6523611572672446066, guid: 5a3717db4d74f1b4fa7c1bb231de9f61, type: 3}
-  - {fileID: 2115293957627484125, guid: 06e536d4d602cba4cba337cb9461f4d5, type: 3}
-  - {fileID: 1848400230394687981, guid: e46df155ac39ecb48ac584c9f1eceb88, type: 3}
   - {fileID: 6708065635052310177, guid: b0d915f62261b0040be89a30322c4830, type: 3}
   - {fileID: 3612113408452483285, guid: 96cb89dfda72b7748ba77eace474f056, type: 3}
   _ediblePrefabs:
   - {fileID: 6523611572672446066, guid: 5a3717db4d74f1b4fa7c1bb231de9f61, type: 3}
-  - {fileID: 2115293957627484125, guid: 06e536d4d602cba4cba337cb9461f4d5, type: 3}
-  - {fileID: 1848400230394687981, guid: e46df155ac39ecb48ac584c9f1eceb88, type: 3}
   - {fileID: 6708065635052310177, guid: b0d915f62261b0040be89a30322c4830, type: 3}
   - {fileID: 3612113408452483285, guid: 96cb89dfda72b7748ba77eace474f056, type: 3}
   _segmentCollection: {fileID: 726959946}

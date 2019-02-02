@@ -42,7 +42,6 @@ public class PlayerEater : NetworkBehaviour
 			if (edible == null)
 				continue;
 
-
 			_objectiveManager.OnAteEdible(_player);
 			edible.OnEat();
 

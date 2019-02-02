@@ -11,6 +11,7 @@ public class NetworkPlayer : NetworkBehaviour
 	[Header("Awards")]
 	[SerializeField] GameObject _mostEatenCrown;
 	[SerializeField] GameObject _dirtiestCrown;
+	[SerializeField] GameObject _cleanestCrown;
 
 	List<int> _pingTracker = new List<int>();
 	int _averagePing = 0;
@@ -29,6 +30,15 @@ public class NetworkPlayer : NetworkBehaviour
 	{
 		_handSync = GetComponent<PlayerHandSync>();
 		_headSync = GetComponent<PlayerHeadSync>();
+	}
+
+	void Start()
+	{
+		if (isServer)
+		{
+			PlayerList playerList = PlayerList.Singleton();
+			playerList.OnPlayerJoined += delegate { SyncAwards(); };
+		}
 	}
 
 	[Server]
@@ -68,6 +78,20 @@ public class NetworkPlayer : NetworkBehaviour
 	}
 	
 	// AWARDSs
+
+	[Server]
+	public void SyncAwards()
+	{
+		RpcSyncAwards(_mostEatenCrown.activeSelf, _dirtiestCrown.activeSelf, _cleanestCrown.activeSelf);
+	}
+
+	[ClientRpc]
+	void RpcSyncAwards(bool mostEaten, bool dirtiest, bool cleanest)
+	{
+		_mostEatenCrown.SetActive(mostEaten);
+		_dirtiestCrown.SetActive(dirtiest);
+		_cleanestCrown.SetActive(cleanest);
+	}
 
 	[Server]
 	public void MostEatenAward()

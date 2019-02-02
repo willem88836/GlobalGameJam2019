@@ -20,9 +20,17 @@ public class TableSegmentCollection : MonoBehaviour
 		for (int i = 0; i < Segments.Length; i++)
 		{
 			TableSegment current = Segments[i];
+
 			PlayerSlot currentSlot = current.GetSlot();
 
+			if (_slotter == null)
+				_slotter = PlayerSlotter.Singleton();
+
 			NetworkPlayer currentPlayer = _slotter.GetPlayer(currentSlot);
+
+			if (currentPlayer == null)
+				continue;
+
 			if (currentPlayer == player)
 				return current;
 		}
