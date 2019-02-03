@@ -14,6 +14,4 @@ public interface IGrabable
 	bool IsGrabbed();
 
 	NetworkInstanceId GetNetId();
-
-	bool IsGrabbed();
 }

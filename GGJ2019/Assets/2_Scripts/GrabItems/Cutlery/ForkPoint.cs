@@ -8,7 +8,7 @@ public class ForkPoint : ToolPoint<IForkable>
 	{
 		obj.OnFork();
 		_grabbedObject = (obj as MonoBehaviour).GetComponent<GrabableObject>();
-		_grabbedObject.OnGrab(transform, MyGrabObject._playerGrabber);
+		_grabbedObject.OnGrab(MyGrabObject._playerGrabber);
 		_grabbedObject.GetComponent<Collider>().enabled = false;
 		_grabbedObject.GetComponent<Rigidbody>().isKinematic = true;
 	}
